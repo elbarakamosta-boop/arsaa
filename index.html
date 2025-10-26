@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>جمعية البركة للعمل الخيري والانساني</title>
+    <link rel="icon" type="image/png" href="images/logo.png" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Authentication Check -->
+    <script>
+      const currentUser = JSON.parse(
+        sessionStorage.getItem("currentUser") ||
+          localStorage.getItem("rememberedUser")
+      );
+      if (!currentUser) {
+        window.location.href = "login.html";
+      }
+    </script>
+
+    <div class="container">
+      <header>
+        <div class="logo-container">
+          <img src="images/logo.png" alt="شعار الجمعية" class="logo" />
+          <div class="header-text">
+            <h1>جمعية البركة للعمل الخيري والانساني</h1>
+            <div class="user-controls">
+              <span id="userGreeting">مرحباً، <span id="userName"></span></span>
+              <button id="logoutBtn" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="main-content">
+        <div class="left-section">
+          <div class="buttons-grid" id="roleButtons">
+            <button data-role="raees" onclick="window.open('1.html', '_blank')">
+              <i class="fas fa-user-tie"></i>
+              رئيس المكتب
+            </button>
+            <button data-role="tanzeem" onclick="window.open('2.html', '_blank')">
+              <i class="fas fa-users-cog"></i>
+              النائب المكلف بالتنظيم
+            </button>
+            <button data-role="hamlat" onclick="window.open('3.html', '_blank')">
+              <i class="fas fa-hands-helping"></i>
+              النائب المكلف بالحملات
+            </button>
+            <button data-role="idara" onclick="window.open('4.html', '_blank')">
+              <i class="fas fa-calculator"></i>
+              الادارة والمالية
+            </button>
+            <button data-role="katib" onclick="window.open('5.html', '_blank')">
+              <i class="fas fa-file-alt"></i>
+              الكاتب العام
+            </button>
+            <button data-role="i3lam" onclick="window.open('6.html', '_blank')">
+              <i class="fas fa-bullhorn"></i>
+              مسؤول الاعلام
+            </button>
+            <button data-role="shabab" onclick="window.open('7.html', '_blank')">
+              <i class="fas fa-users"></i>
+              امانة الشباب
+            </button>
+            <button data-role="nissa" onclick="window.open('8.html', '_blank')">
+              <i class="fas fa-female"></i>
+              نساء البركة
+            </button>
+            <button data-role="aadhou" onclick="window.open('9.html', '_blank')">
+              <i class="fas fa-user"></i>
+              عضو
+            </button>
+          </div>
+
+          <!-- زر قائمة المنخرطين -->
+          <button class="members-btn" onclick="openModal()">
+            <i class="fas fa-users"></i>
+            قائمة المنخرطين
+          </button>
+
+          <div class="modal" id="membersModal">
+            <div class="modal-content">
+              <button class="close-btn" onclick="closeModal()">
+                <i class="fas fa-times"></i>
+              </button>
+              <button class="add-btn" onclick="window.open('add.html', '_blank')">
+                <i class="fas fa-user-plus"></i>
+              </button>
+              <header2>
+                <h12> لائحة الأعضاء</h12>
+                <div class="controls">
+                  <input
+                    id="search"
+                    type="search"
+                    placeholder="ابحث بالاسم، العنوان، الهاتف..."
+                  />
+                  <select id="sortSelect">
+                    <option value="">ترتيب افتراضي</option>
+                    <option value="date_desc">الأحدث</option>
+                    <option value="date_asc">الأقدم</option>
+                    <option value="name_asc">الاسم (أ-ي)</option>
+                    <option value="name_desc">الاسم (ي-أ)</option>
+                  </select>
+                </div>
+              </header2>
+              <main>
+                <div id="grid" class="grid" aria-live="polite"></div>
+                <div id="empty" class="empty" style="display: none">
+                  لا توجد نتائج
+                </div>
+              </main>
+            </div>
+          </div>
+          <!-- زر النشاط المقبل -->
+          <button
+            class="activite-btn"
+            style="margin-top: -20px"
+            onclick="window.open('next-activity.html', '_blank')"
+
+          >
+            <i class="fas fa-calendar-plus"></i>
+            النشاط المقبل
+          </button>
+
+          <!-- زر آخر الأحداث -->
+          <button
+            class="eventss-btn"
+            style="margin-top: -20px"
+            onclick="window.open('next-events.html', '_blank')"
+          >
+            <i class="fas fa-calendar-alt"></i>
+            آخر الأحداث
+          </button>
+
+          <div class="activity-box">
+            <h3><i class="far fa-calendar-alt"></i> النشاط المقبل</h3>
+            <div class="activity-content">
+              <div id="activity"></div>
+            </div>
+          </div>
+
+          <div class="calendar-box">
+            <h3><i class="far fa-calendar"></i> الرزنامة</h3>
+            <div id="calendar"></div>
+          </div>
+        </div>
+
+        <div class="right-section">
+          <div class="profile-box">
+            <div class="profile-pic">
+              <img id="userAvatar" src="" alt="صورة الملف الشخصي" />
+            </div>
+            <div class="profile-info">
+              <h3 id="userFullName">الاسم الكامل</h3>
+              <p class="rank" id="userPosition">الرتبة / المنصب</p>
+            </div>
+          </div>
+
+          <div class="events-box">
+            <h3><i class="far fa-calendar-check"></i> آخر الأحداث</h3>
+            <div class="events-content">
+              <div id="events" class="events-container"></div>
+            </div>
+          </div>
+
+          <div class="documents-box">
+            <h3><i class="far fa-file-alt"></i> الوثائق والمستندات</h3>
+            <div class="upload-area">
+              <label
+                for="files"
+                class="upload-btn"
+                onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSfkLSgm7-mAMS5yBdxfmiloF-jARQXRKXL6fBUAcXTtcp0W4g/viewform', '_blank')"
+              >
+                <i class="fas fa-cloud-upload-alt"></i> رفع ملف
+              </label>
+              <label for="files" class="open-modal-btnn3">
+                <i class="fas fa-folder-open"></i> ملفاتي
+              </label>
+            </div>
+          </div>
+
+          <!-- Chat Box -->
+          <div class="chat-box">
+            <h3><i class="far fa-comments"></i> دردشة سريعة</h3>
+            <div  id="userInfo"></div>
+            <div class="messages2" id="messages2"></div>
+            <div class="chat-input">
+              <input type="text" id="message" placeholder="اكتب رسالة" dir="rtl">
+              <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i> إرسال</button>
+            </div>
+          </div>
+          <!-- النافذة المنبثقة -->
+          <div id="filesModal" class="modal">
+            <div class="modal-content">
+              <span class="close-btnn3">&times;</span>
+              <div class="containern3">
+                <header class="page-header">
+                  <h1>ملفاتي</h1>
+                </header>
+                <div id="files">
+                  <div class="loading3">
+                    <i class="fas fa-spinner fa-spin"></i> جاري تحميل
+                    البيانات...
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="offices-box">
+            <h3><i class="fas fa-building"></i> المكاتب البلدية</h3>
+            <div id="offices-container">
+              <div class="offices-grid" id="offices-grid">
+                <!-- Will be populated by JavaScript -->
+                <div class="loading-offices">جاري تحميل المكاتب...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment-hijri@2.1.2/moment-hijri.min.js"></script>
+    <!-- Load main app script first -->
+    <script src="js/script.js"></script>
+    <!-- Then load offices module -->
+    <script src="js/offices.js"></script>
+    <script>
+      // First load the script that contains the offices data
+      document.write('<script src="js/script.js"><\/script>');
+
+      // Then initialize the offices grid after a short delay
+      window.addEventListener("load", function () {
+        console.log("Window loaded, initializing offices grid...");
+        if (typeof initializeOfficesGrid === "function") {
+          initializeOfficesGrid();
+          // Try again after a short delay in case of any timing issues
+          setTimeout(initializeOfficesGrid, 500);
+        } else {
+          console.error("initializeOfficesGrid function not found!");
+        }
+      });
+    </script>
+    <script>
+      const scriptURL4 =
+        "https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLjCT8P9xbIkjNkwT-9l8-Ycsx4oQZZa_JzzwOF5h18xQWbdeZu7bpg6Yc14ZEy0zx387HKoZH7VKJosiQ7vB8vhIRrStrbOi7V2YJz-biT0OhCQrLEw_EGBpg6xxha1cB_9YNt-ujXL0tngM4l5KkQnDCYJd_cradXnShS5BSNrsgPlg3hixfYcpeHViL9fW0bBBZiKs5_6EKcq5c5YEvD5GiOXxHXecw2Z7wbVuSH474a5vXX_L9CItJ7PnDx9fTtxB_F1n4s7i3iA3C6CnxzeDgkg4A&lib=M9GMHwdKFWtmnwHc_P3xVqxPjlVuYgOMu";
+
+      // تنسيق التاريخ
+      function formatDate(dateString) {
+        if (!dateString) return "غير محدد";
+        const options = { year: "numeric", month: "long", day: "numeric" };
+        return new Date(dateString).toLocaleDateString("ar-DZ", options);
+      }
+
+      // تحديد أيقونة الملف حسب الامتداد
+      function getFileIcon(url) {
+        const ext = url?.split(".").pop().toLowerCase();
+        const icons = {
+          pdf: "file-pdf",
+          doc: "file-word",
+          docx: "file-word",
+          xls: "file-excel",
+          xlsx: "file-excel",
+          jpg: "file-image",
+          jpeg: "file-image",
+          png: "file-image",
+          mp4: "file-video",
+          avi: "file-video",
+          zip: "file-archive",
+        };
+        return icons[ext] || "file";
+      }
+
+      // تحميل البيانات
+      async function loadFiles() {
+        const container = document.getElementById("files");
+        try {
+          const res = await fetch(scriptURL4);
+          const data = await res.json();
+          if (!data.length) {
+            container.innerHTML =
+              "<p style='text-align:center;color:#888;'>لا توجد ملفات حالياً</p>";
+            return;
+          }
+
+          const grid = document.createElement("div");
+          grid.className = "file-grid";
+
+          data.forEach((file) => {
+            const idMatch = file.url?.match(/[-\w]{25,}/);
+            const previewUrl = idMatch
+              ? `https://drive.google.com/file/d/${idMatch[0]}/preview`
+              : "";
+            const icon = getFileIcon(file.url);
+            const card = document.createElement("div");
+            card.className = "file-card";
+            card.innerHTML = `
+                        <div class="file-preview">
+                            <i class="far fa-${icon} fa-4x" style="color:#bdc3c7;"></i>
+                        </div>
+                        <div class="file-info">
+                            <div class="file-name">${
+                              file.name || "ملف بدون اسم"
+                            }</div>
+                            <div class="file-meta">
+                                <span><i class="far fa-calendar"></i> ${formatDate(
+                                  file.horodateur
+                                )}</span>
+                            </div>
+                            <a href="${
+                              file.url
+                            }" target="_blank" class="btnn3"><i class="fas fa-external-link-alt"></i> فتح</a>
+                        </div>
+                    `;
+            grid.appendChild(card);
+          });
+
+          container.innerHTML = "";
+          container.appendChild(grid);
+        } catch (err) {
+          container.innerHTML = `<div class="error-message">حدث خطأ في تحميل البيانات: ${err.message}</div>`;
+        }
+      }
+
+      // تشغيل النافذة
+      const modal = document.getElementById("filesModal");
+      const openBtn = document.querySelector(".open-modal-btnn3");
+      const closeBtn = document.querySelector(".close-btnn3");
+
+      openBtn.onclick = () => {
+        modal.style.display = "block";
+        loadFiles();
+      };
+
+      closeBtn.onclick = () => (modal.style.display = "none");
+
+      window.onclick = (e) => {
+        if (e.target === modal) modal.style.display = "none";
+      };
+    </script>
+    <script src="js/calendar.js"></script>
+    <style>
+      /* Chat Box Styles */
+      .chat-box {
+        margin-top: 20px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        overflow: hidden;
+        font-family: 'Tajawal', sans-serif;
+      }
+      .messages2 {
+        max-height: 200px;
+        overflow-y: auto;
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+        direction: rtl;
+      }
+      .msg {
+        margin: 5px 0;
+        padding: 8px 12px;
+        border-radius: 5px;
+        background: #f5f5f5;
+        max-width: 80%;
+        word-wrap: break-word;
+      }
+      .chat-input {
+        display: flex;
+        padding: 10px;
+        background: transparent;
+      }
+      .chat-input input {
+        flex: 1;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 5px 0 0 5px;
+        font-family: 'Tajawal', sans-serif;
+      }
+      .chat-input button {
+        background: #026e3a;
+        color: white;
+        border: none;
+        padding: 0 15px;
+        border-radius:5px;
+        cursor: pointer;
+        font-family: 'Tajawal', sans-serif;
+      }
+      .chat-input button:hover {
+        background: #019d52;
+      }
+      .user-info {
+        background: #e9f7fe;
+        padding: 10px;
+        text-align: center;
+        font-weight: bold;
+        border-bottom: 1px solid #ddd;
+      }
+    </style>
+    <script>
+      // Function to safely get user data
+      function getUserData() {
+        try {
+          const userData =
+            sessionStorage.getItem("currentUser") ||
+            localStorage.getItem("rememberedUser");
+          return userData ? JSON.parse(userData) : null;
+        } catch (e) {
+          console.error("Error parsing user data:", e);
+          return null;
+        }
+      }
+
+      // Function to update user interface
+      function updateUserInterface(user) {
+        if (!user || !user.name) {
+          window.location.href = "login.html";
+          return;
+        }
+
+        // Set user information once
+        const userNameElement = document.getElementById("userName");
+        const userFullNameElement = document.getElementById("userFullName");
+        const userPositionElement = document.getElementById("userPosition");
+        const userAvatarElement = document.getElementById("userAvatar");
+        const userGreetingElement = document.getElementById("userGreeting");
+
+        // Prevent multiple updates
+        if (userNameElement && !userNameElement.dataset.initialized) {
+          userNameElement.textContent = user.name;
+          userNameElement.dataset.initialized = "true";
+        }
+
+        if (userFullNameElement && !userFullNameElement.dataset.initialized) {
+          userFullNameElement.textContent = user.name;
+          userFullNameElement.dataset.initialized = "true";
+        }
+
+        if (userPositionElement && !userPositionElement.dataset.initialized) {
+          userPositionElement.textContent = user.position || "الرتبة / المنصب";
+          userPositionElement.dataset.initialized = "true";
+        }
+
+        if (userAvatarElement && !userAvatarElement.dataset.initialized) {
+          // Set a base64 encoded placeholder image if no avatar is provided
+          const placeholderImage =
+            "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNTAiIGhlaWdodD0iMTUwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+CiAgPHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2YwZjBmMCIvPgogIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0nQXJpYWwnIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiM5OTk5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj7Yp9mE2YrYr9mI2K8g2KfZhNmF2YbYtNmHPC90ZXh0Pgo8L3N2Zz4=";
+
+          if (user.avatar) {
+            userAvatarElement.src = user.avatar;
+            userAvatarElement.onerror = function () {
+              this.src = placeholderImage;
+              this.onerror = null; // Prevent infinite loop
+            };
+          } else {
+            userAvatarElement.src = placeholderImage;
+          }
+
+          userAvatarElement.alt = "صورة الملف الشخصي";
+          userAvatarElement.style.borderRadius = "50%";
+          userAvatarElement.style.width = "80px";
+          userAvatarElement.style.height = "80px";
+          userAvatarElement.style.objectFit = "cover";
+          userAvatarElement.dataset.initialized = "true";
+        }
+
+        // Set greeting based on time
+        if (userGreetingElement && !userGreetingElement.dataset.initialized) {
+          const hour = new Date().getHours();
+          let greeting = "صباح الخير";
+          if (hour >= 12 && hour < 18) {
+            greeting = "مساء الخير";
+          } else if (hour >= 18) {
+            greeting = "مساء الخير";
+          }
+          userGreetingElement.textContent = `${greeting}، ${user.name}`;
+          userGreetingElement.dataset.initialized = "true";
+        }
+
+        // Hide Next Activity and Last Events buttons for non-president users
+        const nextActivityBtn = document.querySelector(".activite-btn");
+        const lastEventsBtn = document.querySelector(".eventss-btn");
+
+        if (nextActivityBtn && lastEventsBtn) {
+          if (user.role !== "raees") {
+            nextActivityBtn.style.display = "none";
+            lastEventsBtn.style.display = "none";
+          } else {
+            nextActivityBtn.style.display = "block";
+            lastEventsBtn.style.display = "block";
+          }
+        }
+      }
+
+      // Initialize when DOM is loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        // Get current user from session or local storage
+        const user = getUserData();
+
+        // If no user is logged in, redirect to login page
+        if (!user) {
+          window.location.href = "login.html";
+          return;
+        }
+
+        // Update the UI with user information
+        updateUserInterface(user);
+
+        // Set up role buttons based on user role
+        setupRoleButtons(user.role || "aadhou");
+
+        // Update profile section
+        const userFullNameElement = document.getElementById("userFullName");
+        const userPositionElement = document.getElementById("userPosition");
+
+        if (userFullNameElement) {
+          userFullNameElement.textContent = user.name || "زائر";
+        }
+
+        if (userPositionElement) {
+          userPositionElement.textContent = user.position || "زائر";
+        }
+
+        // Set up logout button
+        const logoutBtn = document.getElementById("logoutBtn");
+        if (logoutBtn && !logoutBtn.dataset.listenerAdded) {
+          logoutBtn.addEventListener("click", function () {
+            sessionStorage.removeItem("currentUser");
+            localStorage.removeItem("rememberedUser");
+            window.location.href = "login.html";
+          });
+          logoutBtn.dataset.listenerAdded = "true";
+        }
+
+        // Set up role buttons
+        if (user) {
+          setupRoleButtons(user.role || "aadhou");
+        }
+      });
+
+      function setupRoleButtons(userRole) {
+        console.log("Setting up role buttons for:", userRole);
+        const buttons = document.querySelectorAll("#roleButtons button");
+        
+        // إعادة تعيين جميع الأزرار
+        buttons.forEach(button => {
+          button.classList.remove("active-role");
+          button.disabled = false;
+          
+          // إزالة معالجات الأحداث القديمة
+          const newButton = button.cloneNode(true);
+          button.parentNode.replaceChild(newButton, button);
+        });
+        
+        // الحصول على الأزرار الجديدة بعد الاستبدال
+        const updatedButtons = document.querySelectorAll("#roleButtons button");
+        
+        // إذا كان المستخدم رئيس المكتب
+        if (userRole === "raees") {
+          updatedButtons.forEach(button => {
+            const role = button.getAttribute("data-role");
+            
+            // تمييز الزر النشط الحالي
+            if (role === userRole) {
+              button.classList.add("active-role");
+            }
+            
+            // إضافة معالج النقر لتبديل الأدوار
+            button.addEventListener("click", function(e) {
+              e.preventDefault();
+              const selectedRole = this.getAttribute("data-role");
+              console.log("Button clicked, selected role:", selectedRole);
+              
+              // تحديث حالة الأزرار
+              updatedButtons.forEach(btn => {
+                btn.classList.remove("active-role");
+              });
+              this.classList.add("active-role");
+              
+              // تحديث دور المستخدم في التخزين
+              const user = getUserData();
+              if (user) {
+                // تحديث الدور مع الحفاظ على الصلاحيات
+                user.currentRole = selectedRole; // استخدام خاصية جديدة لتتبع الدور الحالي
+                sessionStorage.setItem("currentUser", JSON.stringify(user));
+                if (localStorage.getItem("rememberedUser")) {
+                  localStorage.setItem("rememberedUser", JSON.stringify(user));
+                }
+                
+                // فتح الصفحة المناسبة للدور المحدد
+                const pageMap = {
+                  'raees': '1.html',
+                  'tanzeem': '2.html',
+                  'hamlat': '3.html',
+                  'idara': '4.html',
+                  'katib': '5.html',
+                  'i3lam': '6.html',
+                  'shabab': '7.html',
+                  'nissa': '8.html',
+                  'aadhou': '9.html'
+                };
+                
+                if (pageMap[selectedRole]) {
+                  window.open(pageMap[selectedRole], '_blank');
+                }
+                
+                // إعادة تعيين الأزرار مع الحفاظ على صلاحيات الرئيس
+                setupRoleButtons("raees");
+              }
+            });
+          });
+        } 
+        // إذا كان المستخدم ليس رئيس مكتب
+        else {
+          updatedButtons.forEach(button => {
+            const role = button.getAttribute("data-role");
+            
+            if (role === userRole) {
+              button.classList.add("active-role");
+              button.disabled = false;
+            } else {
+              button.disabled = true;
+            }
+          });
+        }
+        
+        console.log("Role buttons setup completed for:", userRole);
+      }
+
+      const scriptURL =
+        "https://script.google.com/macros/s/AKfycbz_i-wRFIAbax3k0s-HWLp5Y8CrN7mkOussemBhDYOIGNJ5a_lLWuh7kyjGdQQC-IM0/exec";
+
+      // 🧼 دالة حماية النص من HTML
+      function escapeHtml(str) {
+        if (!str && str !== 0) return "";
+        return String(str).replace(/[&<>"']/g, function (m) {
+          return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;",
+          }[m];
+        });
+      }
+
+      // 🕒 تنسيق التاريخ بالعربية مع "صباحًا" و "مساءً"
+      function formatDateTime(input) {
+        if (!input) return "";
+        const dateObj = new Date(input);
+        if (isNaN(dateObj)) return "";
+
+        let formatted = dateObj
+          .toLocaleString("ar-DZ", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+          })
+          .replace("،", " - ");
+
+        // 🪄 استبدال "ص" و "م" بكلمات كاملة
+        formatted = formatted.replace("ص", "صباحًا").replace("م", "مساءً");
+
+        return formatted;
+      }
+
+      function showNoActivity() {
+        document.getElementById("activity").innerHTML =
+          '<p class="no-activity"> سيتم تحديث نشاط قريباً</p>';
+      }
+
+      function showActivity(activity) {
+        const container = document.getElementById("activity");
+        container.innerHTML = "";
+
+        if (!activity || !activity.title) {
+          showNoActivity();
+          return;
+        }
+
+        // 🧮 التحقق من مرور 7 أيام بعد تاريخ النشاط
+        const activityDate = new Date(activity.date);
+        const now = new Date();
+        const diffDays = (now - activityDate) / (1000 * 60 * 60 * 24);
+
+        if (isNaN(activityDate) || diffDays > 1) {
+          showNoActivity();
+          return;
+        }
+
+        const card = document.createElement("div");
+        card.className = "activity-card";
+        card.innerHTML = `
+        <h2>${escapeHtml(activity.title)}</h2>
+        <p>${escapeHtml(activity.description)}</p>
+        <p class="date">التاريخ : ${escapeHtml(
+          formatDateTime(activity.date)
+        )}</p>
+        <p class="place">المكان : ${escapeHtml(activity.place)}</p>
+      `;
+        container.appendChild(card);
+      }
+
+      // 📨 جلب البيانات من Google Apps Script
+      fetch(scriptURL)
+        .then((response) => response.json())
+        .then((data) => showActivity(data))
+        .catch((err) => {
+          console.error("حدث خطأ:", err);
+          showNoActivity();
+        });
+    </script>
+
+    <script>
+      const scriptURL2 =
+        "https://script.google.com/macros/s/AKfycbxJ6c1rf-hBehdnMKTrNFwgyGhMEglgd6K3GVqJgXPujM_d2Vha5p0hj6AWVAOZ0zBh/exec";
+
+      function escapeHtml(str) {
+        if (!str && str !== 0) return "";
+        return String(str).replace(
+          /[&<>"']/g,
+          (m) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            }[m])
+        );
+      }
+
+      // 🕒 تنسيق التاريخ بالعربية بدون الساعة
+      function formatDateTime(input) {
+        if (!input) return "";
+        const d = new Date(input);
+        if (isNaN(d)) return "";
+        return d.toLocaleDateString("ar-DZ", {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        });
+      }
+
+      function showNoEvents() {
+        document.getElementById("events").innerHTML =
+          '<p class="no-events"> لا توجد أحداث حديثة حاليًا</p>';
+      }
+
+      function showEvents(events) {
+        const container = document.getElementById("events");
+        container.innerHTML = "";
+
+        if (!events || events.length === 0) {
+          showNoEvents();
+          return;
+        }
+
+        // 🧮 ترتيب الأحداث من الأحدث إلى الأقدم
+        events.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        // 🪄 عرض آخر 3 فقط
+        const lastThree = events.slice(0, 3);
+
+        // 🕒 استبعاد الأحداث التي مضى عليها أكثر من 7 أيام
+        const now = new Date();
+        const validEvents = lastThree.filter((e) => {
+          const eventDate = new Date(e.date);
+          return (
+            !isNaN(eventDate) && (now - eventDate) / (1000 * 60 * 60 * 24) <= 7
+          );
+        });
+
+        if (validEvents.length === 0) {
+          showNoEvents();
+          return;
+        }
+
+        validEvents.forEach((event) => {
+          const card = document.createElement("div");
+          card.className = "event-card";
+          card.innerHTML = `
+          <h2>${escapeHtml(event.title)}</h2>
+          <p>${escapeHtml(event.description)}</p>
+          <p class="date">التاريخ : ${escapeHtml(
+            formatDateTime(event.date)
+          )}</p>
+          <p class="place">المكان : ${escapeHtml(event.place)}</p>
+        `;
+          container.appendChild(card);
+        });
+      }
+
+      fetch(scriptURL2)
+        .then((res) => res.json())
+        .then((data) => showEvents(data))
+        .catch((err) => {
+          console.error("حدث خطأ:", err);
+          showNoEvents();
+        });
+    </script>
+
+    <script>
+      // 🔸 وظائف فتح وغلق النافذة
+      function openModal() {
+        document.getElementById("membersModal").style.display = "flex";
+      }
+      function closeModal() {
+        document.getElementById("membersModal").style.display = "none";
+      }
+
+      const WEB_APP_URL3 =
+        "https://script.google.com/macros/s/AKfycbxRnqZU8tYp6wfm_uELbS7VO1QF2JgDlmZwG6ClhEUjhP3f4yT8AJ6JStX3Yn3-zJDPeQ/exec";
+      const API_KEY = "";
+
+      const KEYS = {
+        joinDate: "تاريخ الانخراط",
+        fullName: "الاسم و اللقب",
+        photo: "الصورة",
+        birth: "تاريخ و مكان الميلاد",
+        status: "الحالة الاجتماعية",
+        address: "العنوان",
+        phone: "الهاتف",
+        email: "البريد الإلكتروني",
+      };
+
+      const grid = document.getElementById("grid");
+      const emptyBox = document.getElementById("empty");
+      const searchInput = document.getElementById("search");
+      const sortSelect = document.getElementById("sortSelect");
+      let members = [];
+
+      async function fetchMembers() {
+        try {
+          const url = new URL(WEB_APP_URL3);
+          if (API_KEY) url.searchParams.set("apiKey", API_KEY);
+          const res = await fetch(url.toString(), { cache: "no-store" });
+          if (!res.ok) throw new Error("فشل التحميل");
+          const data = await res.json();
+          members = data.map(normalizeRow);
+          render();
+        } catch (err) {
+          emptyBox.style.display = "block";
+          emptyBox.textContent = "حدث خطأ أثناء جلب البيانات.";
+          console.error(err);
+        }
+      }
+
+      function normalizeRow(row) {
+        const d = row[KEYS.joinDate] || "";
+        return {
+          joinDate: formatDate(d),
+          fullName: row[KEYS.fullName] || "",
+          photo: row[KEYS.photo] || "",
+          birth: row[KEYS.birth] || "",
+          status: row[KEYS.status] || "",
+          address: row[KEYS.address] || "",
+          phone: row[KEYS.phone] || "",
+          email: row[KEYS.email] || "",
+        };
+      }
+
+      function formatDate(value) {
+        if (!value) return "";
+        const date = new Date(value);
+        if (isNaN(date)) return value;
+        return date.toLocaleDateString("ar-DZ", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        });
+      }
+
+      function render() {
+        const q = searchInput.value.trim().toLowerCase();
+        let list = members.filter((m) => {
+          const hay = (
+            m.fullName +
+            " " +
+            m.address +
+            " " +
+            m.phone +
+            " " +
+            m.email
+          ).toLowerCase();
+          return hay.includes(q);
+        });
+
+        const sort = sortSelect.value;
+        if (sort === "date_desc")
+          list.sort((a, b) => new Date(b.joinDate) - new Date(a.joinDate));
+        if (sort === "date_asc")
+          list.sort((a, b) => new Date(a.joinDate) - new Date(b.joinDate));
+        if (sort === "name_asc")
+          list.sort((a, b) => a.fullName.localeCompare(b.fullName, "ar"));
+        if (sort === "name_desc")
+          list.sort((a, b) => b.fullName.localeCompare(a.fullName, "ar"));
+
+        grid.innerHTML = "";
+        if (!list.length) {
+          emptyBox.style.display = "block";
+          emptyBox.textContent = q ? "لا توجد نتائج للبحث." : "لا توجد بيانات.";
+          return;
+        } else emptyBox.style.display = "none";
+
+        list.forEach((m) => {
+          const card = document.createElement("article");
+          card.className = "card";
+
+          const avatar = document.createElement("div");
+          avatar.className = "avatar";
+          const img = document.createElement("img");
+          img.alt = m.fullName;
+          img.src = m.photo || placeholderSVG(m.fullName);
+          avatar.appendChild(img);
+
+          const info = document.createElement("div");
+          info.className = "info";
+
+          const title = document.createElement("div");
+          title.className = "title";
+          title.textContent = m.fullName;
+
+          const meta = document.createElement("div");
+          meta.className = "meta-grid";
+          addField(meta, "تاريخ الانخراط", m.joinDate);
+          addField(meta, "تاريخ و مكان الميلاد", m.birth);
+          addField(meta, "الحالة الاجتماعية", m.status);
+          addField(meta, "العنوان", m.address);
+          addField(meta, "الهاتف", m.phone);
+          addField(meta, "البريد الإلكتروني", m.email);
+
+          info.appendChild(title);
+          info.appendChild(meta);
+          card.appendChild(avatar);
+          card.appendChild(info);
+          grid.appendChild(card);
+        });
+      }
+
+      function addField(parent, label, value) {
+        const f = document.createElement("div");
+        f.className = "field";
+        const l = document.createElement("div");
+        l.className = "label";
+        l.textContent = label;
+        const v = document.createElement("div");
+        v.className = "value";
+        v.textContent = value || "—";
+        f.appendChild(l);
+        f.appendChild(v);
+        parent.appendChild(f);
+      }
+
+      function placeholderSVG(name) {
+        const short = (name || "")
+          .split(" ")
+          .map((s) => s[0] || "")
+          .slice(0, 2)
+          .join("")
+          .toUpperCase();
+        const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'><rect width='100%' height='100%' fill='%23eaf2ff'/><text x='50%' y='50%' font-family='sans-serif' font-size='90' text-anchor='middle' dominant-baseline='central' fill='%2390a4bf'>${
+          short || "ص"
+        }</text></svg>`;
+        return "data:image/svg+xml;utf8," + encodeURIComponent(svg);
+      }
+
+      searchInput.addEventListener(
+        "input",
+        debounce(() => render(), 200)
+      );
+      sortSelect.addEventListener("change", () => render());
+
+      function debounce(fn, wait) {
+        let t;
+        return function (...args) {
+          clearTimeout(t);
+          t = setTimeout(() => fn.apply(this, args), wait);
+        };
+      }
+
+      fetchMembers();
+
+      // Chat functionality
+      const scriptURL7 = "https://script.google.com/macros/s/AKfycbzyG20jpY-CzfO1gAwf1-MKZ1twg11JHEoJeX0yOb6w56NY0HFhcDTLrd-WzDfeqWy7/exec";
+
+      async function loadMessages() {
+        try {
+          const res = await fetch(scriptURL7);
+          const data = await res.json();
+          const msgBox = document.getElementById("messages2");
+          if (msgBox) {
+            msgBox.innerHTML = data.map(m => 
+              `<div class='msg'><strong>${escapeHtml(m.name)}:</strong> ${escapeHtml(m.message)}</div>`
+            ).join('');
+            msgBox.scrollTop = msgBox.scrollHeight;
+          }
+        } catch (error) {
+          console.error('Error loading messages:', error);
+        }
+      }
+
+      // Get current user
+      function getCurrentUser() {
+        try {
+          const userData = sessionStorage.getItem('currentUser') || localStorage.getItem('rememberedUser');
+          return userData ? JSON.parse(userData) : null;
+        } catch (e) {
+          console.error('Error getting user data:', e);
+          return null;
+        }
+      }
+
+      // Update user info display
+      function updateUserInfo() {
+        const user = getCurrentUser();
+        const userInfo = document.getElementById('userInfo');
+        
+        if (user && user.fullName) {
+          userInfo.textContent = `مرحباً ${user.fullName}`;
+          userInfo.style.display = 'block';
+        } else {
+          userInfo.textContent = '';
+          userInfo.style.display = 'none';
+        }
+      }
+
+      async function sendMessage() {
+        const user = getCurrentUser();
+        if (!user) {
+          alert('الرجاء تسجيل الدخول أولاً');
+          window.location.href = 'login.html';
+          return;
+        }
+
+        const messageInput = document.getElementById("message");
+        const message = messageInput.value.trim();
+        
+        if (!message) return alert("الرجاء كتابة رسالة");
+
+        try {
+          const formData = new FormData();
+          // إضافة الاسم الكامل مع المنصب
+          const displayName = user.position ? 
+            `${user.name} - ${user.position}` : 
+            user.name || 'مستخدم';
+          
+          formData.append("name", displayName);
+          formData.append("message", message);
+          formData.append("originalName", user.name || 'مستخدم'); // حفظ الاسم الأصلي للاستخدام المستقبلي
+
+          await fetch(scriptURL7, { method: "POST", body: formData });
+          messageInput.value = "";
+          loadMessages();
+        } catch (error) {
+          console.error('Error sending message:', error);
+          alert('حدث خطأ أثناء إرسال الرسالة');
+        }
+      }
+
+      // Initialize chat
+      document.addEventListener('DOMContentLoaded', function() {
+        updateUserInfo();
+        loadMessages();
+        setInterval(loadMessages, 2000);
+
+        // Send message on Enter key
+        const messageInput = document.getElementById("message");
+        if (messageInput) {
+          messageInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+              sendMessage();
+            }
+          });
+        }
+      });
+    </script>
+    
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>معلومات التواصل</h4>
+          <p><i class="fas fa-map-marker-alt"></i> العنوان: حي العرصة بالقرب من مسجد عثمان بن عفان</p>
+          <p><i class="fas fa-phone"></i> الهاتف: 0660210500</p>
+          <p><i class="fas fa-envelope"></i> البريد الإلكتروني: elbarakamosta@gmail.com</p>
+        </div>
+        <div class="footer-section">
+          <h4>تابعنا على</h4>
+          <div class="social-links">
+            <a href="https://web.facebook.com/elbaraka.mostaganem" class="social-icon"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/elbaraka.mostaganem" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@elbarakahdz" class="social-icon"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom" >
+        <p style="text-align: center; direction: ltr;">© 2025 جميع الحقوق محفوظة - جمعية البركة للعمل الخيري والانساني</p>
+      </div>
+    </footer> 
+
+    <style>
+      /* Footer Styles */
+      .site-footer {
+        background: linear-gradient(135deg, #024e29, #03924d);
+        color: #fff;
+        padding: 30px 0 10px;
+        margin-top: 40px;
+        font-family: 'Tajawal', sans-serif;
+      }
+      
+      .footer-content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+      
+      .footer-section {
+        flex: 1;
+        min-width: 250px;
+        margin: 0 15px 20px;
+      }
+      
+      .footer-section h4 {
+        color: #fff;
+        margin-bottom: 20px;
+        position: relative;
+        padding-bottom: 10px;
+      }
+      
+      .footer-section h4::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 50px;
+        height: 2px;
+        background: #fdc116;
+      }
+      
+      .footer-section ul {
+        list-style: none;
+        padding: 0;
+      }
+      
+      .footer-section ul li {
+        margin-bottom: 10px;
+      }
+      
+      .footer-section ul li a {
+        color: #ecf0f1;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+      
+      .footer-section ul li a:hover {
+        color: #fdc116;
+        padding-right: 5px;
+      }
+      
+      .footer-section p {
+        color: #ecf0f1;
+        margin: 10px 0;
+        display: flex;
+        align-items: center;
+      }
+      
+      .footer-section p i {
+        margin-left: 10px;
+        color: #fdc116;
+      }
+      
+      .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+      }
+      
+      .social-icon {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.1);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        text-decoration: none;
+      }
+      
+      .social-icon:hover {
+        background: #fdc116;
+        transform: translateY(-3px);
+      }
+      
+      .footer-bottom {
+        text-align: center;
+        padding: 15px 0;
+        margin-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 14px;
+        color: #ecf0f1;
+      }
+      
+      @media (max-width: 768px) {
+        .footer-section {
+          flex: 100%;
+          text-align: center;
+          margin-bottom: 30px;
+        }
+        
+        .footer-section h4::after {
+          right: 50%;
+          transform: translateX(50%);
+        }
+        
+        .social-links {
+          justify-content: center;
+        }
+        
+        .footer-section p {
+          justify-content: center;
+        }
+      }
+    </style>
+  </body>
+</html>

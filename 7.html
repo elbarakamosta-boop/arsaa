@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/png" href="images/logo.png" />
+    <title>جمعية البركة للعمل الخيري والانساني - الأهداف</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      .container {
+        max-width: 100%;
+        padding: 0 20px;
+      }
+      
+      .goals-container {
+        background: white;
+        border-radius: 10px;
+        padding: 25px;
+        margin: 20px auto;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        width: 95%;
+        max-width: 1400px;
+      }
+      
+      .goals-form {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-bottom: 25px;
+      }
+      
+      .goals-form input {
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-family: 'Tajawal', sans-serif;
+        font-size: 15px;
+        transition: border-color 0.3s;
+      }
+      
+      .goals-form input:focus {
+        outline: none;
+        border-color: #026e3a;
+        box-shadow: 0 0 0 2px hsla(151, 96%, 22%, 0.2);
+      }
+      
+      .add-goal-btn {
+        background: #026e3a;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-family: 'Tajawal', sans-serif;
+        font-weight: 500;
+        font-size: 15px;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+      
+      .add-goal-btn:hover {
+        background: #026133;
+        transform: translateY(-1px);
+      }
+      
+      .goals-table-container {
+        width: 100%;
+        overflow-x: auto;
+        margin-top: 20px;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+      
+      .goals-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 800px;
+      }
+      
+      .goals-table th, 
+      .goals-table td {
+        padding: 14px 16px;
+        text-align: center;
+        border: 1px solid #e0e0e0;
+        transition: background-color 0.2s;
+      }
+      
+      .goals-table th {
+        background-color: #f0f7ff;
+        font-weight: 600;
+        color: #026e3a;
+        white-space: nowrap;
+      }
+      
+      .goals-table tr:nth-child(even) {
+        background-color: #f8fafc;
+      }
+      
+      .goals-table tr:hover {
+        background-color: #f1f8ff;
+      }
+      
+      .action-buttons {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+      }
+      
+      .edit-btn, .delete-btn {
+        padding: 6px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-family: 'Tajawal', sans-serif;
+        font-size: 13px;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        transition: all 0.2s;
+      }
+      
+      .edit-btn {
+        background-color: #fdc116;
+        color: #000;
+      }
+      
+      .edit-btn:hover {
+        background-color: #fdc116;
+      }
+      
+      .delete-btn {
+        background-color: #f44336;
+        color: white;
+      }
+      
+      .delete-btn:hover {
+        background-color: #d32f2f;
+      }
+      
+      .save-btn {
+        background-color: #4caf50;
+        color: white;
+      }
+      
+      .save-btn:hover {
+        background-color: #388e3c;
+      }
+      
+      .cancel-btn {
+        background-color: #9e9e9e;
+        color: white;
+      }
+      
+      .cancel-btn:hover {
+        background-color: #757575;
+      }
+      
+      .editable {
+        background-color: #fffde7 !important;
+        border: 1px solid #fdc116 !important;
+        padding: 8px 10px !important;
+        border-radius: 4px;
+      }
+      
+      .main-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        min-height: 100vh;
+        width: 100%;
+        padding: 20px 0;
+      }
+      
+      h2 {
+        color: #026e3a;
+        margin-bottom: 20px;
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      
+      h3 {
+        color: #026e3a;
+        margin: 25px 0 15px;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      const currentUser = JSON.parse(
+        sessionStorage.getItem("currentUser") ||
+          localStorage.getItem("rememberedUser")
+      );
+      if (!currentUser) {
+        window.location.href = "login.html";
+      }
+    </script>
+
+    <div class="container">
+      <header>
+        <div class="logo-container">
+          <img src="images/logo.png" alt="شعار الجمعية" class="logo" />
+          <div class="header-text">
+            <h1>جمعية البركة للعمل الخيري والانساني</h1>
+            <div class="user-controls">
+              <span id="userGreeting">مرحباً، <span id="userName"></span></span>
+              <button id="logoutBtn" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="main-content">
+          <div class="buttons-grid">
+            <button onclick="window.location.href='index.html'" class="back-button">
+              <i class="fas fa-arrow-right"></i> العودة للصفحة الرئيسية
+            </button>
+          </div>
+          <div class="goals-container">
+            <h2><i class="fas fa-bullseye"></i> إضافة هدف جديد</h2>
+            
+            <div class="goals-form">
+              <input type="text" id="date" placeholder="اليوم">
+              <input type="text" id="target" placeholder="المستهدفات">
+              <input type="text" id="requirements" placeholder="المستلزمات">
+              <input type="text" id="progress" placeholder="نسبة الإتمام">
+              <button onclick="addRow()" class="add-goal-btn">
+                <i class="fas fa-plus"></i> إضافة هدف
+              </button>
+            </div>
+
+            <h3><i class="fas fa-list-check"></i> الأهداف</h3>
+            <table class="goals-table">
+              <thead>
+                <tr>
+                  <th>اليوم</th>
+                  <th>المستهدفات</th>
+                  <th>المستلزمات</th>
+                  <th>نسبة الإتمام</th>
+                  <th>الإجراءات</th>
+                </tr>
+              </thead>
+              <tbody id="dataBody"></tbody>
+            </table>
+          </div>
+      </div>
+    </div>
+
+    <script>
+      // Update user info
+      document.addEventListener('DOMContentLoaded', function() {
+        const user = JSON.parse(sessionStorage.getItem('currentUser') || localStorage.getItem('rememberedUser') || '{}');
+        if (user && user.name) {
+          document.getElementById('userName').textContent = user.name;
+          
+          // Set user avatar if available
+          const userAvatar = document.getElementById('userAvatar');
+          if (userAvatar) {
+            if (user.avatar) {
+              userAvatar.src = user.avatar;
+            } else {
+              // Default avatar
+              userAvatar.src = 'images/profiles/default.png';
+            }
+          }
+        }
+
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+          sessionStorage.removeItem('currentUser');
+          localStorage.removeItem('rememberedUser');
+          window.location.href = 'login.html';
+        });
+      });
+
+      // Google Sheets API URL - استبدل هذا برابط نشر التطبيق الذي حصلت عليه
+      const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz-et8sE6HzauQ80_Y2O8FoolDMXJHLG4gyNQOQzr_OJ1hRc16wM3AGktfy_hu55txb/exec';
+      
+      // إظهار/إخفاء مؤشر التحميل
+      function showLoading(show) {
+        const loading = document.getElementById('loading');
+        if (loading) {
+          loading.style.display = show ? 'flex' : 'none';
+        }
+      }
+      
+      // إظهار رسالة للمستخدم
+      function showMessage(message, isError = false) {
+        const messageDiv = document.getElementById('message');
+        if (messageDiv) {
+          messageDiv.textContent = message;
+          messageDiv.className = isError ? 'error-message' : 'success-message';
+          messageDiv.style.display = 'block';
+          setTimeout(() => {
+            messageDiv.style.display = 'none';
+          }, 3000);
+        }
+      }
+      
+      // إرسال طلب إلى Google Sheets باستخدام JSONP
+      function callGoogleScript(action, data = {}) {
+        return new Promise((resolve, reject) => {
+          try {
+            showLoading(true);
+            
+            // إنشاء معرف فريد للرد
+            const callbackName = 'jsonp_callback_' + Math.round(100000 * Math.random());
+            
+            // إضافة المعلمات إلى URL
+            const params = new URLSearchParams();
+            params.append('action', action);
+            params.append('callback', callbackName);
+            
+            // إضافة البيانات إلى المعلمات
+            Object.keys(data).forEach(key => {
+              params.append(key, data[key]);
+            });
+            
+            // إنشاء عنصر script
+            const script = document.createElement('script');
+            script.src = `${SCRIPT_URL}?${params.toString()}`;
+            
+            // تعريف دالة الاستدعاء
+            window[callbackName] = function(response) {
+              delete window[callbackName];
+              document.body.removeChild(script);
+              showLoading(false);
+              resolve(response);
+            };
+            
+            // معالجة الأخطاء
+            script.onerror = function() {
+              delete window[callbackName];
+              document.body.removeChild(script);
+              showLoading(false);
+              showMessage('فشل في الاتصال بالخادم', true);
+              reject(new Error('فشل في الاتصال بالخادم'));
+            };
+            
+            // إضافة السكريبت للصفحة لبدء الطلب
+            document.body.appendChild(script);
+          } catch (error) {
+            console.error('Error:', error);
+            showMessage('حدث خطأ في الاتصال بالخادم', true);
+            showLoading(false);
+            reject(error);
+          }
+        });
+      }
+      
+      // إضافة هدف جديد
+      async function addRow() {
+        const date = document.getElementById('date').value;
+        const target = document.getElementById('target').value;
+        const requirements = document.getElementById('requirements').value;
+        let progress = document.getElementById('progress').value;
+        
+        // إضافة % إذا لم تكن موجودة
+        if (progress && !progress.endsWith('%')) {
+          progress += '%';
+        }
+
+        if (!date || !target || !requirements || !progress) {
+          showMessage('الرجاء ملء جميع الحقول', true);
+          return;
+        }
+        
+        // إرسال البيانات إلى Google Sheets
+        const result = await callGoogleScript('add', {
+          date,
+          target,
+          requirements,
+          progress
+        });
+        
+        if (result && result.status === 'success') {
+          // مسح الحقول بعد الإضافة الناجحة
+          document.getElementById('date').value = '';
+          document.getElementById('target').value = '';
+          document.getElementById('requirements').value = '';
+          document.getElementById('progress').value = '';
+          
+          // إعادة تحميل البيانات
+          loadGoals();
+          showMessage('تمت إضافة الهدف بنجاح');
+        } else {
+          showMessage('فشل في إضافة الهدف', true);
+        }
+      }
+      
+      async function editRow(button) {
+        const row = button.closest('tr');
+        const cells = row.getElementsByTagName('td');
+        const id = row.getAttribute('data-id');
+        
+        // If already in edit mode, save changes
+        if (row.classList.contains('editing')) {
+          // Get edited values
+          const editedData = {
+            date: cells[0].querySelector('input').value,
+            target: cells[1].querySelector('input').value,
+            requirements: cells[2].querySelector('input').value,
+            progress: cells[3].querySelector('input').value,
+            id: id
+          };
+          
+          try {
+            const result = await callGoogleScript('update', editedData);
+            
+            if (result && result.status === 'success') {
+              // Update row content
+              cells[0].textContent = editedData.date;
+              cells[1].textContent = editedData.target;
+              cells[2].textContent = editedData.requirements;
+              cells[3].textContent = editedData.progress;
+              
+              // Restore action buttons
+              cells[4].innerHTML = `
+                <button class="edit-btn" onclick="editRow(this)">
+                  <i class="fas fa-edit"></i> تعديل
+                </button>
+                <button class="delete-btn" onclick="deleteRow(this)">
+                  <i class="fas fa-trash"></i> حذف
+                </button>
+              `;
+              
+              row.classList.remove('editing');
+              showMessage('تم تحديث الهدف بنجاح');
+            } else {
+              throw new Error('فشل في تحديث البيانات');
+            }
+          } catch (error) {
+            console.error('Error updating goal:', error);
+            showMessage('حدث خطأ أثناء تحديث الهدف', true);
+          }
+          return;
+        }
+        
+        // Enter edit mode
+        row.classList.add('editing');
+        
+        // Make cells editable
+        for (let i = 0; i < 4; i++) {
+          const cell = cells[i];
+          const text = cell.textContent;
+          cell.innerHTML = `<input type="text" value="${text}" class="editable">`;
+        }
+        
+        // Change buttons to Save and Cancel
+        cells[4].innerHTML = `
+          <button class="save-btn" onclick="editRow(this)">
+            <i class="fas fa-save"></i> حفظ
+          </button>
+          <button class="cancel-btn" onclick="cancelEdit(this)">
+            <i class="fas fa-times"></i> إلغاء
+          </button>
+        `;
+      }
+      
+      function cancelEdit(button) {
+        const row = button.closest('tr');
+        const cells = row.getElementsByTagName('td');
+        
+        // Restore original content
+        const originalData = row._originalData || [];
+        for (let i = 0; i < 4; i++) {
+          cells[i].textContent = originalData[i] || '';
+        }
+        
+        // Restore action buttons
+        cells[4].innerHTML = `
+          <button class="edit-btn" onclick="editRow(this)">
+            <i class="fas fa-edit"></i> تعديل
+          </button>
+          <button class="delete-btn" onclick="deleteRow(this)">
+            <i class="fas fa-trash"></i> حذف
+          </button>
+        `;
+        
+        row.classList.remove('editing');
+      }
+      
+      async function deleteRow(button) {
+        if (confirm('هل أنت متأكد من حذف هذا الهدف؟')) {
+          const row = button.closest('tr');
+          const id = row.getAttribute('data-id');
+          
+          const result = await callGoogleScript('delete', { id });
+          
+          if (result && result.status === 'success') {
+            row.remove();
+            showMessage('تم حذف الهدف بنجاح');
+          } else {
+            showMessage('فشل في حذف الهدف', true);
+          }
+        }
+      }
+
+      // تمت إزالة دالة saveGoals القديمة لأننا نستخدم Google Sheets الآن
+
+      async function loadGoals() {
+        try {
+          showLoading(true);
+          const response = await callGoogleScript('getAll');
+          const goals = response.data || [];
+          
+          const tbody = document.getElementById('dataBody');
+          tbody.innerHTML = '';
+          
+          if (goals && goals.length > 0) {
+            // عكس ترتيب الأهداف لعرض الأحدث أولاً
+          const reversedGoals = [...goals].reverse();
+          reversedGoals.forEach((goal, index) => {
+              const row = document.createElement('tr');
+              row.setAttribute('data-id', goal.id || index + 1);
+              // تحويل القيمة العشرية إلى نسبة مئوية إذا كانت القيمة رقمية
+              let progress = goal['نسبة الإتمام'] || '';
+              if (progress && !isNaN(parseFloat(progress)) && isFinite(progress)) {
+                // تحويل من صيغة عشرية (مثل 0.67) إلى نسبة مئوية (67%)
+                progress = (parseFloat(progress) * 100).toFixed(0) + '%';
+              }
+              
+              row.innerHTML = `
+                <td>${goal.اليوم || ''}</td>
+                <td>${goal.المستهدفات || ''}</td>
+                <td>${goal.المستلزمات || ''}</td>
+                <td>${progress}</td>
+                <td class="action-buttons">
+                  <button class="edit-btn" onclick="editRow(this)">
+                    <i class="fas fa-edit"></i> تعديل
+                  </button>
+                  <button class="delete-btn" onclick="deleteRow(this)">
+                    <i class="fas fa-trash"></i> حذف
+                  </button>
+                </td>
+              `;
+              tbody.appendChild(row);
+            });
+          } else {
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">لا توجد أهداف مسجلة بعد</td></tr>';
+          }
+        } catch (error) {
+          console.error('Error loading goals:', error);
+          showMessage('حدث خطأ في تحميل الأهداف', true);
+        } finally {
+          showLoading(false);
+        }
+      }
+
+      // إضافة أنماط إضافية
+      const style = document.createElement('style');
+      style.textContent = `
+        #loading {
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(255, 255, 255, 0.8);
+          justify-content: center;
+          align-items: center;
+          z-index: 1000;
+        }
+        .spinner {
+          width: 40px;
+          height: 40px;
+          border: 4px solid #f3f3f3;
+          border-top: 4px solid #3498db;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        #message {
+          display: none;
+          padding: 10px 15px;
+          margin: 10px 0;
+          border-radius: 4px;
+          text-align: center;
+        }
+        .success-message {
+          background-color: #d4edda;
+          color: #155724;
+          border: 1px solid #c3e6cb;
+        }
+        .error-message {
+          background-color: #f8d7da;
+          color: #721c24;
+          border: 1px solid #f5c6cb;
+        }
+      `;
+      document.head.appendChild(style);
+      
+      // إضافة عناصر واجهة المستخدم الديناميكية
+      document.addEventListener('DOMContentLoaded', function() {
+        // إضافة مؤشر التحميل
+        const loadingDiv = document.createElement('div');
+        loadingDiv.id = 'loading';
+        loadingDiv.innerHTML = '<div class="spinner"></div>';
+        document.body.appendChild(loadingDiv);
+        
+        // إضافة حاوية الرسائل
+        const messageDiv = document.createElement('div');
+        messageDiv.id = 'message';
+        const container = document.querySelector('.container');
+        container.insertBefore(messageDiv, container.firstChild);
+        
+        // تحميل الأهداف عند تحميل الصفحة
+        loadGoals();
+      });
+    </script>
+  </body>
+</html>
