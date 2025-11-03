@@ -54,7 +54,7 @@ const users = [
         id: 6,
         username: 'i3lam',
         password: 'I3lam123',
-        name: 'أمنة الإعلام',
+        name: 'أمانة الإعلام',
         position: 'مسؤول الإعلام',
         email: 'i3lam@elbaraka.com',
         avatar: 'images/profiles/6.png',
