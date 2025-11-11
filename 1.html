@@ -200,6 +200,17 @@
         align-items: center;
         gap: 8px;
       }
+            .continairete{max-width:900px;margin:0 auto}
+      header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+      h1{font-size:20px;margin:0}
+      p.lead{margin:0;color:var(--muted)}
+      .carta{border-radius:12px;padding:18px}
+      ol.agendate{padding-left:18px;margin:0}
+      ol.agendate li{padding:12px 10px;border-radius:8px;margin-bottom:10px;background:linear-gradient(90deg, rgba(11,94,215,0.04), transparent);}
+      .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+      .btn{padding:8px 12px;border-radius:8px;border:0;cursor:pointer}
+      .btn.primary{background:var(--accent);color:#fff}
+      .btn.ghost{background:transparent;border:1px solid #e6eefc;color:var(--accent)}
     </style>
   </head>
   <body>
@@ -248,6 +259,155 @@
               </button>
             </div>
 
+            <h3><i class="fas fa-check-double"></i> المهام</h3>
+                <div class="continairete">
+      <section class="carta">
+        <ol class="agendate">
+          <li>
+            <strong>التنسيق مع رئيس الجمعية العامة الولائية لتحضير جدول أعمال دورات الجمعية العامة الولائية</strong>
+          </li>
+          <li>
+            <strong>اقتراح أعضاء المكتب التنفيذي الولائي بالتشاور مع نائبيه وعرضهم للتزكية على الجمعية العامة الولائية</strong>
+          </li>
+
+          <li>
+            <strong>تكليف عضو أو أعضاء من المكتب التنفيذي الولائي بمهام أخرى عند الضرورة</strong>
+          </li>
+          <li>
+            <strong>السهر على تنفيذ برامج وقرارات الجمعية</strong>
+          </li>
+          <li>
+            <strong>تمثيل الجمعية أمام السلطات الولائية</strong>
+          </li>
+        </ol>
+
+        <div class="actions">
+          <button class="btn primary" onclick="window.print()">طباعة</button>
+          <button class="btn ghost" onclick="copyToClipboard()">نسخ النص</button>
+        </div>
+
+        <script>
+          // عرض التاريخ الحالي (هجري/ميلادي حسب المتصفح) - هنا ميلادي
+          const dateEl = document.getElementById('date');
+          const today = new Date();
+          dateEl.textContent = today.toLocaleDateString('ar-DZ');
+
+          function copyToClipboard(){
+            try {
+              // First try to find agenda items
+              const agendaItems = document.querySelectorAll('.agenda-item');
+              if (agendaItems.length === 0) {
+                // If no agenda items found, try to find any list items in the current section
+                const section = document.querySelector('section');
+                if (section) {
+                  const items = [];
+                  const listItems = section.querySelectorAll('li');
+                  
+                  listItems.forEach(li => {
+                    if (li.textContent.trim()) {
+                      items.push(li.textContent.trim());
+                    }
+                  });
+                  
+                  if (items.length > 0) {
+                    return copyTextToClipboard(items.join('\n\n'));
+                  }
+                }
+                throw new Error('لا توجد عناصر للنسخ');
+              }
+              
+              // Process agenda items if found
+              const items = [];
+              agendaItems.forEach(item => {
+                const title = item.querySelector('h4, h3, h2, h1, strong, b')?.textContent?.trim() || '';
+                const description = item.querySelector('p, div')?.textContent?.trim() || '';
+                const time = item.querySelector('time, .time, .date')?.textContent?.trim() || '';
+                
+                if (title || description) {
+                  const itemText = [title];
+                  if (time) itemText.push(time);
+                  if (description) itemText.push(description);
+                  items.push(itemText.join('\n'));
+                }
+              });
+              
+              if (items.length === 0) {
+                throw new Error('لا توجد نصوص للنسخ');
+              }
+              
+              return copyTextToClipboard(items.join('\n\n'));
+            } catch (error) {
+              console.error('Error in copyToClipboard:', error);
+              alert('حدث خطأ: ' + (error.message || 'تعذر الوصول إلى الحافظة'));
+              return false;
+            }
+          }
+          
+          // Helper function to handle the actual copying with fallback
+          function copyTextToClipboard(text) {
+            // Try modern clipboard API first
+            if (navigator.clipboard && window.isSecureContext) {
+              return navigator.clipboard.writeText(text)
+                .then(() => {
+                  showSuccessMessage('تم نسخ النص إلى الحافظة');
+                  return true;
+                })
+                .catch(err => {
+                  console.error('Clipboard API error:', err);
+                  return copyWithExecCommand(text);
+                });
+            } else {
+              // Fallback for non-secure contexts or older browsers
+              return copyWithExecCommand(text);
+            }
+          }
+          
+          function copyWithExecCommand(text) {
+            return new Promise((resolve) => {
+              try {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';  // Prevent scrolling to bottom
+                textarea.style.opacity = '0';       // Make it invisible
+                document.body.appendChild(textarea);
+                
+                // Select and copy
+                textarea.select();
+                textarea.setSelectionRange(0, 99999); // For mobile devices
+                
+                const success = document.execCommand('copy');
+                document.body.removeChild(textarea);
+                
+                if (success) {
+                  showSuccessMessage('تم نسخ النص إلى الحافظة');
+                  resolve(true);
+                } else {
+                  showErrorMessage('تعذر الوصول إلى الحافظة. الرجاء النسخ يدوياً.');
+                  resolve(false);
+                }
+              } catch (err) {
+                console.error('execCommand error:', err);
+                showErrorMessage('تعذر الوصول إلى الحافظة. الرجاء النسخ يدوياً.');
+                resolve(false);
+              }
+            });
+          }
+          
+          function showSuccessMessage(message) {
+            const msg = document.createElement('div');
+            msg.textContent = message;
+            msg.style.cssText = 'position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #4CAF50; color: white; padding: 10px 20px; border-radius: 4px; z-index: 1000;';
+            document.body.appendChild(msg);
+            setTimeout(() => msg.remove(), 3000);
+          }
+          
+          function showErrorMessage(message) {
+            alert(message);
+          }
+        </script>
+      </section>
+
+    </div>
             <h3><i class="fas fa-list-check"></i> الأهداف</h3>
             <table class="goals-table">
               <thead>
