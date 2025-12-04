@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>إدارة بيانات الجمعية - جمعية البركة للعمل الخيري والانساني</title>
+    <link rel="icon" type="image/png" href="images/logo.png" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      /* تنسيقات عامة */
+      body {
+        font-family: "Tajawal", sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f5f5f5;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      h1 {
+        color: #026e3a;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 24px;
+      }
+
+      /* تنسيق الأزرار */
+      .sheet-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+        justify-content: center;
+      }
+
+      .sheet-btn {
+        background: #026e3a;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-family: "Tajawal", sans-serif;
+        font-weight: 500;
+        font-size: 15px;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .sheet-btn:hover {
+        background: #015a2f;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .sheet-btn i {
+        font-size: 14px;
+      }
+
+      .stat-btn {
+        background: #fdc116;
+        color: rgb(0, 0, 0);
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-family: "Tajawal", sans-serif;
+        font-weight: 500;
+        font-size: 15px;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .sheet-btn:hover {
+        background: #015a2f;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .sheet-btn i {
+        font-size: 14px;
+      }
+
+      /* تنسيق الجدول */
+      .table-container {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        overflow-x: auto;
+        margin-bottom: 30px;
+      }
+      
+      /* تنسيق شريط البحث والتصدير */
+      .table-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      
+      .search-container {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      
+      .search-container input[type="text"] {
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        width: 250px;
+        max-width: 100%;
+        font-family: 'Tajawal', sans-serif;
+      }
+      
+      .export-btn {
+        background: #2c3e50;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-family: 'Tajawal', sans-serif;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        transition: all 0.3s;
+      }
+      
+      .export-btn:hover {
+        background: #1a252f;
+        transform: translateY(-2px);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 12px 15px;
+        text-align: center;
+        border-bottom: 1px solid #e0e0e0;
+      }
+
+      th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+        color: #333;
+        position: sticky;
+        top: 0;
+      }
+
+      tr:hover {
+        background-color: #f5f5f5;
+      }
+
+      /* تنسيق أزرار الإجراءات */
+      .action-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 5px 8px;
+        border-radius: 4px;
+        margin: 0 3px;
+        font-size: 14px;
+        transition: all 0.2s;
+      }
+
+      .edit-btn {
+        color: #2196f3;
+      }
+
+      .edit-btn:hover {
+        background-color: rgba(33, 150, 243, 0.1);
+      }
+
+      .delete-btn {
+        color: #f44336;
+      }
+
+      .delete-btn:hover {
+        background-color: rgba(244, 67, 54, 0.1);
+      }
+
+      .save-btn {
+        color: #4caf50;
+      }
+
+      .save-btn:hover {
+        background-color: rgba(76, 175, 80, 0.1);
+      }
+
+      .cancel-btn {
+        color: #ff9800;
+      }
+
+      .cancel-btn:hover {
+        background-color: rgba(255, 152, 0, 0.1);
+      }
+
+      /* نموذج الإضافة */
+      .form-container {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        margin: 20px 0;
+        max-width: 100%;
+        overflow: hidden;
+      }
+
+      .form-title {
+        color: #026e3a;
+        margin-top: 0;
+        margin-bottom: 20px;
+        font-size: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #f0f0f0;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 15px;
+        margin: 0;
+        padding: 10px 0;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+        color: #444;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-family: "Tajawal", sans-serif;
+        font-size: 14px;
+        transition: border-color 0.3s;
+      }
+
+      /* تنسيق قسم النموذج */
+      .form-section {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+      }
+
+      .form-section h3 {
+        color: #026e3a;
+        margin-top: 0;
+        margin-bottom: 20px;
+        font-size: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #f0f0f0;
+      }
+
+      .form-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+
+      .form-container input {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-family: "Tajawal", sans-serif;
+        font-size: 14px;
+        transition: border-color 0.3s;
+      }
+
+      .form-container input:focus {
+        outline: none;
+        border-color: #026e3a;
+        box-shadow: 0 0 0 2px rgba(2, 110, 58, 0.2);
+      }
+
+      .form-group input:focus {
+        outline: none;
+        border-color: #026e3a;
+        box-shadow: 0 0 0 2px rgba(2, 110, 58, 0.2);
+      }
+      
+      /* تنسيق أزرار الإجراءات */
+      .actions {
+        white-space: nowrap;
+      }
+      
+      .actions button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 5px 8px;
+        border-radius: 4px;
+        margin: 0 2px;
+        font-size: 14px;
+        transition: all 0.2s;
+      }
+      
+      .edit-btn {
+        color: #2196f3;
+      }
+      
+      .edit-btn:hover {
+        background-color: rgba(33, 150, 243, 0.1);
+      }
+      
+      .delete-btn {
+        color: #f44336;
+      }
+      
+      .delete-btn:hover {
+        background-color: rgba(244, 67, 54, 0.1);
+      }
+      
+      .save-btn {
+        color: #4caf50;
+      }
+      
+      .save-btn:hover {
+        background-color: rgba(76, 175, 80, 0.1);
+      }
+      
+      .cancel-btn {
+        color: #ff9800;
+      }
+      
+      .cancel-btn:hover {
+        background-color: rgba(255, 152, 0, 0.1);
+      }
+      
+      /* تنسيق خلايا الجدول القابلة للتعديل */
+      td.editing {
+        background-color: #fff8e1;
+        border: 1px solid #ffd54f !important;
+      }
+      
+      /* تنسيق رسائل التنبيه */
+      .alert {
+        padding: 10px 15px;
+        margin: 10px 0;
+        border-radius: 4px;
+        font-weight: 500;
+      }
+      
+      .alert-success {
+        background-color: #e8f5e9;
+        color: #2e7d32;
+        border: 1px solid #c8e6c9;
+      }
+      
+      .alert-error {
+        background-color: #ffebee;
+        color: #c62828;
+        border: 1px solid #ffcdd2;
+      }
+      
+      .alert-info {
+        background-color: #e3f2fd;
+        color: #1565c0;
+        border: 1px solid #bbdefb;
+      }
+
+      .form-actions {
+        display: flex;
+        justify-content: flex-start;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-family: "Tajawal", sans-serif;
+        font-weight: 500;
+        font-size: 14px;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .btn-primary {
+        background: #026e3a;
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background: #015a2f;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn-secondary {
+        background: #6c757d;
+        color: white;
+      }
+
+      .btn-secondary:hover {
+        background: #5a6268;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      /* رسائل التنبيه */
+      .home-link {
+        display: inline-flex;
+        align-items: center;
+        padding: 8px 15px;
+        background-color: #f0f8f0;
+        border-radius: 6px;
+        color: #026e3a;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        border: 1px solid #d1e7dd;
+        margin-bottom: 15px;
+      }
+
+      .home-link:hover {
+        background-color: #e1f0e1;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .home-link i {
+        margin-left: 8px;
+        font-size: 16px;
+      }
+
+      .alert {
+        padding: 12px 15px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .alert-success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6c9;
+      }
+
+      .alert-error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+      .header-text {
+        margin: 15px 15px 0 0;
+        padding: 5px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      
+      .header-text h1 {
+        margin: 0;
+        line-height: 1.2;
+      }
+
+      /* تنسيقات للهاتف */
+      @media (max-width: 768px) {
+        .container {
+          padding: 10px;
+        }
+
+        .sheet-buttons {
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .sheet-btn {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+
+        th,
+        td {
+          padding: 8px 5px;
+          font-size: 14px;
+        }
+
+        .action-btn {
+          padding: 3px 5px;
+          font-size: 12px;
+        }
+      }
+
+      /* تنسيقات إضافية للجداول على الهاتف */
+      @media (max-width: 480px) {
+        .table-container {
+          border-radius: 0;
+          margin-left: -10px;
+          margin-right: -10px;
+          width: calc(100% + 20px);
+        }
+
+        table {
+          min-width: 100%;
+        }
+
+        th,
+        td {
+          padding: 6px 3px;
+          font-size: 13px;
+        }
+
+        .btn {
+          padding: 8px 15px;
+          font-size: 13px;
+        }
+      }
+      /* تأثيرات الحركة */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .fade-in {
+        animation: fadeIn 0.3s ease-out;
+      }
+
+      /* تأثيرات التحويم على الصفوف */
+      tbody tr {
+        transition: background-color 0.2s, transform 0.2s;
+      }
+
+      tbody tr:hover {
+        background-color: #f8f9fa !important;
+        transform: translateX(-2px);
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      /* تنسيق أزرار الإجراءات */
+      .actions-cell {
+        white-space: nowrap;
+      }
+
+      /* تحسين مظهر حقول الإدخال في وضع التركيز */
+      input:focus {
+        border-color: #026e3a !important;
+        box-shadow: 0 0 0 0.2rem rgba(2, 110, 58, 0.25) !important;
+      }
+
+      /* تنسيق زر الإلغاء */
+      #cancelBtn {
+        background-color: #6c757d;
+        color: white;
+      }
+
+      #cancelBtn:hover {
+        background-color: #5a6268;
+      }
+
+      /* تنسيق رسائل التنبيه */
+      .alert-info {
+        background-color: #e7f5ff;
+        color: #0c5460;
+        border: 1px solid #bee5eb;
+      }
+
+      /* تحسين مظهر الجدول على الشاشات الصغيرة */
+      @media (max-width: 768px) {
+        .actions-cell {
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+        }
+
+        .action-btn {
+          width: 100%;
+          text-align: center;
+          justify-content: center;
+        }
+      }
+
+      /* إضافة أنماط إضافية */
+      .action-btn {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header>
+        <div class="lefts-section">
+          <div class="logo-container">
+            <img src="images/logo.png" alt="شعار الجمعية" class="logo" />
+            <div class="header-text">
+              <h1>لوحة التحكم</h1>
+              <div class="user-controls">
+                <span id="userGreeting">
+                  مرحباً، <span id="userName"></span>
+                </span>
+                <button id="logoutBtn" class="logout-btn">
+                  <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+                </button>
+              </div>
+              <a href="index.html" class="home-link">
+                <i class="fas fa-home"></i>
+                <span>الرئيسية</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="rights-section">
+          <div class="profile-box">
+            <div class="profile-pic">
+              <img
+                id="userAvatar"
+                src="images/profiles/1.png"
+                alt="صورة الملف الشخصي"
+              />
+            </div>
+            <div class="profile-info">
+              <h3 id="userFullName">مدير النظام</h3>
+              <p class="rank" id="userPosition">إدارة البيانات</p>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main style="margin-top: 230px">
+        <h1><i class="fas fa-database"></i> لوحة التحكم</h1>
+
+        <!-- رسائل التنبيه -->
+        <div id="alertContainer" style="display: none">
+          <div id="alertMessage" class="alert"></div>
+        </div>
+
+        <!-- أزرار اختيار الجداول -->
+        <div class="sheet-buttons">
+          <button class="stat-btn" onclick="loadSheet('الإحصائات')">
+            <i class="fas fa-chart-bar"></i> الإحصائات
+          </button>
+          <button class="sheet-btn" onclick="loadSheet('المنخرطين')">
+            <i class="fas fa-users"></i> المنخرطين
+          </button>
+          <button class="sheet-btn" onclick="loadSheet('السائقين')">
+            <i class="fas fa-truck"></i> السائقين
+          </button>
+          <button class="sheet-btn" onclick="loadSheet('المؤسسات')">
+            <i class="fas fa-building"></i> المؤسسات
+          </button>
+          <button class="sheet-btn" onclick="loadSheet('المعوزين')">
+            <i class="fas fa-hands-helping"></i> المعوزين
+          </button>
+          <button class="sheet-btn" onclick="loadSheet('المتصلين')">
+            <i class="fas fa-phone"></i> المتصلين
+          </button>
+        </div>
+<!-- نموذج الإضافة -->
+<div class="form-section">
+  <h3 id="formTitle"></h3>
+  <div id="formContainer" class="form-container" style="box-shadow: none;margin-bottom: -5px;margin-top: -20px"></div>
+  <button id="addBtn" class="sheet-btn" onclick="addRow()" style="display: none;">
+    <i class="fas fa-plus"></i> إضافة
+  </button>
+</div>
+<!-- جدول البيانات -->
+<div class="table-container">
+  <div class="table-actions" style="margin: 20px;">
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="ابحث في الجدول..." onkeyup="searchTable()">
+      <button class="sheet-btn" onclick="searchTable()">
+        <i class="fas fa-search"></i> بحث
+      </button>
+    </div>
+    <button class="export-btn" onclick="window.print()">
+      <i class="fas fa-print"></i> طباعة الجدول
+    </button>
+  </div>
+  <table id="dataTable">
+    <thead id="tableHead"></thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+</div>
+
+      </main>
+
+      <!-- Footer -->
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>معلومات التواصل</h4>
+          <p><i class="fas fa-map-marker-alt"></i> العنوان: حي العرصة بالقرب من مسجد عثمان بن عفان</p>
+          <p><i class="fas fa-phone"></i> الهاتف: 0660210500</p>
+          <p><i class="fas fa-envelope"></i> البريد الإلكتروني: elbarakamosta@gmail.com</p>
+        </div>
+        <div class="footer-section">
+          <h4>تابعنا على</h4>
+          <div class="social-links">
+            <a href="https://web.facebook.com/elbaraka.mostaganem" class="social-icon"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/elbaraka.mostaganem" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@elbarakahdz" class="social-icon"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom" >
+        <p style="text-align: center; direction: ltr;">© 2025 جميع الحقوق محفوظة - جمعية البركة للعمل الخيري والانساني</p>
+      </div>
+    </footer> 
+    </div>
+
+<script>
+  // ---------------- إعدادات ----------------
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby_nb2K4vvKSSGf-rIzoC4piG7rCajELDVAN-CxQQL0FlSBcWwctobNNlH6fRcP9qOo/exec";
+  const DEBUG = true;
+  let currentSheet = "";
+  let currentHeaders = [];
+  
+  // دالة لتحويل تنسيق التاريخ من YYYY-MM-DDTHH:mm:ss.SSSZ إلى DD-MM-YYYY
+  function formatDate(dateString) {
+    if (!dateString) return '';
+    try {
+      const date = new Date(dateString);
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}-${month}-${year}`;
+    } catch (e) {
+      console.error('Error formatting date:', e);
+      return dateString; // في حالة الخطأ، نعيد القيمة الأصلية
+    }
+  }
+
+  function debugLog(msg, data) {
+    if (DEBUG) console.log("[DEBUG]", msg, data || "");
+  }
+
+  // ---------------- تحميل الورقة ----------------
+  function loadSheet(sheetName) {
+    currentSheet = sheetName;
+    const body = document.getElementById("tableBody");
+    const head = document.getElementById("tableHead");
+    body.innerHTML = "<tr><td colspan='10'>جاري التحميل...</td></tr>";
+    head.innerHTML = "";
+
+    // جاهز النموذج
+    loadForm(sheetName);
+    document.getElementById("formTitle").innerText = "إضافة إلى " + sheetName;
+    document.getElementById("addBtn").style.display = "inline-block";
+
+    const url = WEB_APP_URL + `?action=getAll&sheet=${encodeURIComponent(sheetName)}`;
+    debugLog("fetching", url);
+
+    $.ajax({
+      url: url,
+      dataType: "jsonp",
+      timeout: 10000,
+      success: function(response) {
+        debugLog("received data", response);
+        displayData(response);
+      },
+      error: function(xhr, status, err) {
+        console.error("Error loading data:", status, err);
+        body.innerHTML = `<tr><td colspan='10' style='color:red;'>حدث خطأ في تحميل البيانات: ${status}</td></tr>`;
+      }
+    });
+  }
+
+  // ---------------- عرض البيانات ----------------
+  function displayData(response) {
+    const head = document.getElementById("tableHead");
+    const body = document.getElementById("tableBody");
+    head.innerHTML = "";
+    body.innerHTML = "";
+
+    if (!response || !response.data || response.data.length === 0) {
+      body.innerHTML = "<tr><td colspan='10'>لا توجد بيانات</td></tr>";
+      return;
+    }
+
+    // نفترض أن الصف الأول يحتوي على رؤوس (rowData = array of headers)
+    currentHeaders = response.data[0].rowData || [];
+
+    // إنشاء رؤوس
+    let headersHTML = "<tr><th>#</th>";
+    currentHeaders.forEach(h => headersHTML += `<th>${h}</th>`);
+    headersHTML += "<th>الإجراءات</th></tr>";
+    head.innerHTML = headersHTML;
+
+    // صفوف البيانات تبدأ من index 1
+    for (let i = 1; i < response.data.length; i++) {
+      const row = response.data[i];
+      const rowId = (row && row.rowId) ? String(row.rowId) : String(i);
+      const cells = (row && row.rowData) ? row.rowData : [];
+      let tr = `<tr data-row-id="${rowId}" data-row-index="${i}"><td>${i}</td>`;
+
+      cells.forEach((c, ci) => {
+        // تحويل التاريخ إذا كان الحقل يحتوي على تاريخ
+        let cellValue = c !== undefined && c !== null ? c : '';
+        
+        // التحقق مما إذا كان الحقل يحتوي على تاريخ بتنسيق ISO
+        if (typeof cellValue === 'string' && cellValue.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/)) {
+          cellValue = formatDate(cellValue);
+        }
+        
+        tr += `<td class="editable" data-col-index="${ci}">${cellValue}</td>`;
+      });
+
+      tr += `<td class="actions">
+                <button class="edit-btn" onclick="editRow(this)" title="تعديل"><i class="fas fa-edit"></i></button>
+                <button class="delete-btn" onclick="deleteRow('${rowId}')" title="حذف"><i class="fas fa-trash"></i></button>
+                <button class="save-btn" onclick="saveRow(this)" style="display:none;" title="حفظ"><i class="fas fa-save"></i></button>
+                <button class="cancel-btn" onclick="cancelEdit(this)" style="display:none;" title="إلغاء"><i class="fas fa-times"></i></button>
+             </td></tr>`;
+
+      body.innerHTML += tr;
+    }
+  }
+
+  // ---------------- نموذج كل ورقة ----------------
+  function loadForm(sheetName) {
+    const form = document.getElementById("formContainer");
+    form.innerHTML = "";
+    let fields = [];
+    switch (sheetName) {
+      case "السائقين":
+        fields = ["رقم هاتف السائق","السائق","رقم هاتف المسؤول","مسؤول البلدية","البلدية","ملاحظة"];
+        break;
+      case "المنخرطين":
+        fields = ["الإسم واللقب","تاريخ ومكان الميلاد","رقم الهاتف","عنوان السكن","الحالة الاجتماعية","ملاحظة"];
+        break;
+      case "المؤسسات":
+        fields = ["الفئة","اسم المؤسسة","رقم الهاتف","ملاحظة"];
+        break;
+      case "المعوزين":
+        fields = ["الإسم و اللقب","رقم الهاتف","عنوان السكن","الصفة و عدد الأولاد","ملاحظة"];
+        break;
+      case "المتصلين":
+        fields = ["الإسم و اللقب","رقم الهاتف","ملاحظة"];
+        break;
+      default:
+        fields = [];
+    }
+    fields.forEach((f, i) => {
+      form.innerHTML += `<input id="field${i}" placeholder="${f}">`;
+    });
+  }
+
+  // ---------------- تحرير الصف ----------------
+  function editRow(btn) {
+    const row = btn.closest('tr');
+    if (!row) return;
+    const cells = row.querySelectorAll('td.editable');
+    row.originalValues = [];
+    cells.forEach(cell => {
+      row.originalValues.push(cell.textContent.trim());
+      cell.contentEditable = true;
+      cell.classList.add('editing');
+    });
+
+    // تبديل الأزرار
+    row.querySelector('.edit-btn').style.display = 'none';
+    const del = row.querySelector('.delete-btn'); if (del) del.style.display = 'none';
+    const save = row.querySelector('.save-btn'); if (save) save.style.display = 'inline-block';
+    const cancel = row.querySelector('.cancel-btn'); if (cancel) cancel.style.display = 'inline-block';
+  }
+
+  // ---------------- إلغاء التعديل ----------------
+  function cancelEdit(btn) {
+    const row = btn.closest('tr');
+    if (!row) return;
+    const cells = row.querySelectorAll('td.editable');
+    if (row.originalValues && row.originalValues.length) {
+      cells.forEach((cell, idx) => {
+        cell.textContent = row.originalValues[idx] || '';
+        cell.contentEditable = false;
+        cell.classList.remove('editing');
+      });
+    } else {
+      // إذا لم يكن هناك قيم أصلية فقط تعطيل التحرير
+      cells.forEach(cell => {
+        cell.contentEditable = false;
+        cell.classList.remove('editing');
+      });
+    }
+
+    // إعادة الأزرار
+    const edit = row.querySelector('.edit-btn'); if (edit) edit.style.display = 'inline-block';
+    const del = row.querySelector('.delete-btn'); if (del) del.style.display = 'inline-block';
+    const save = row.querySelector('.save-btn'); if (save) save.style.display = 'none';
+    const cancel = row.querySelector('.cancel-btn'); if (cancel) cancel.style.display = 'none';
+  }
+
+  // ---------------- حفظ التعديل ----------------
+  function saveRow(btn) {
+    try {
+      const row = btn.closest('tr');
+      if (!row) return showAlert('تعذر العثور على الصف للحفظ', 'error');
+
+      const rowId = row.getAttribute('data-row-id') || row.dataset.rowId;
+      if (!rowId) return showAlert('معرف الصف غير متوفر', 'error');
+
+      const cells = row.querySelectorAll('td.editable');
+      const values = [];
+      cells.forEach(cell => values.push(cell.textContent.trim()));
+
+      // تحقق بسيط
+      // (يمكنك إضافة فحص الحقول المطلوبة هنا حسب الورقة)
+      // إرسال عبر JSONP إلى Web App بنفس شكل الإضافة
+      const url = WEB_APP_URL + `?action=update&sheet=${encodeURIComponent(currentSheet)}&rowId=${encodeURIComponent(rowId)}&values=${encodeURIComponent(JSON.stringify(values))}&callback=updateComplete`;
+      debugLog('sending update', url);
+
+      // عرض تنبيه تحميل مؤقت
+      showAlert('جاري حفظ التغييرات...', 'info');
+
+      $.ajax({
+        url: url,
+        dataType: 'jsonp',
+        timeout: 10000,
+        success: function(resp) {
+          debugLog('update response', resp);
+          if (resp && resp.status === 'success') {
+            showAlert('تم تحديث البيانات بنجاح', 'success');
+            loadSheet(currentSheet);
+          } else {
+            showAlert(resp && resp.message ? resp.message : 'فشل في تحديث البيانات', 'error');
+            // إرجاع الحالة المرئية للصف
+            cancelEdit(row.querySelector('.cancel-btn'));
+          }
+        },
+        error: function(xhr, status, err) {
+          console.error('update error', status, err);
+          showAlert('خطأ في الاتصال أثناء الحفظ', 'error');
+          cancelEdit(row.querySelector('.cancel-btn'));
+        }
+      });
+
+    } catch (e) {
+      console.error('saveRow error', e);
+      showAlert('حدث خطأ أثناء الحفظ: ' + (e.message || e), 'error');
+    }
+  }
+
+  // ---------------- حذف ----------------
+  function deleteRow(rowId) {
+    if (!confirm('هل أنت متأكد من حذف هذا السطر؟')) return;
+    const url = WEB_APP_URL + `?action=delete&sheet=${encodeURIComponent(currentSheet)}&rowId=${encodeURIComponent(rowId)}&callback=deleteComplete`;
+    $.ajax({
+      url: url,
+      dataType: 'jsonp',
+      success: function(resp) {
+        if (resp && resp.status === 'success') {
+          showAlert('تم حذف السطر بنجاح', 'success');
+          loadSheet(currentSheet);
+        } else {
+          showAlert(resp && resp.message ? resp.message : 'حدث خطأ أثناء الحذف', 'error');
+        }
+      },
+      error: function() {
+        showAlert('فشل الاتصال أثناء الحذف', 'error');
+      }
+    });
+  }
+
+  // ---------------- إضافة ----------------
+  function addRow() {
+    const inputs = document.querySelectorAll("#formContainer input");
+    const values = [];
+    let valid = true;
+    inputs.forEach(i => {
+      if (!i.value.trim()) {
+        i.style.borderColor = 'red';
+        valid = false;
+      } else {
+        i.style.borderColor = '';
+        values.push(i.value.trim());
+      }
+    });
+    if (!valid) {
+      showAlert('الرجاء ملء جميع الحقول المطلوبة', 'error');
+      return;
+    }
+
+    const url = WEB_APP_URL + `?action=add&sheet=${encodeURIComponent(currentSheet)}&values=${encodeURIComponent(JSON.stringify(values))}&callback=added`;
+    $.ajax({ url: url, dataType: 'jsonp', timeout: 10000 });
+  }
+
+  function added(resp) {
+    if (resp && resp.status === 'success') {
+      showAlert('تمت الإضافة بنجاح', 'success');
+      document.querySelectorAll("#formContainer input").forEach(i => i.value = '');
+      loadSheet(currentSheet);
+    } else {
+      showAlert(resp && resp.message ? resp.message : 'فشل في الإضافة', 'error');
+    }
+  }
+
+  // ---------------- رسائل و Callbacks ----------------
+  function showAlert(message, type='info') {
+    const container = document.getElementById('alertContainer');
+    const alertMessage = document.getElementById('alertMessage');
+    alertMessage.className = `alert alert-${type}`;
+    alertMessage.innerHTML = message;
+    container.style.display = 'block';
+    setTimeout(() => { container.style.display = 'none'; }, 4000);
+  }
+
+  // ردود JSONP
+  function updateComplete(resp) {
+    // سيُستدعى عادة من ال callback في السيرفر، لكن نحن نتعامل مباشرة في success callback أيضاً
+    if (resp && resp.status === 'success') {
+      showAlert('تم التحديث', 'success');
+      loadSheet(currentSheet);
+    } else {
+      showAlert(resp && resp.message ? resp.message : 'فشل التحديث', 'error');
+    }
+  }
+
+  function deleteComplete(resp) {
+    if (resp && resp.status === 'success') {
+      showAlert('تم الحذف', 'success');
+      loadSheet(currentSheet);
+    } else {
+      showAlert(resp && resp.message ? resp.message : 'فشل الحذف', 'error');
+    }
+  }
+
+  // دالة طباعة الجدول
+  function printTable() {
+    window.print();
+  }
+
+  // دالة البحث في الجدول
+  function searchTable() {
+    const input = document.getElementById('searchInput');
+    const filter = input.value.trim().toUpperCase();
+    const table = document.getElementById('dataTable');
+    const rows = table.getElementsByTagName('tr');
+
+    // إعادة تعيين عرض جميع الصفوف
+    for (let i = 1; i < rows.length; i++) {
+      rows[i].style.display = '';
+    }
+
+    // إذا كان حقل البحث فارغاً، لا داعي للبحث
+    if (filter === '') {
+      return;
+    }
+
+    // البحث في الصفوف
+    for (let i = 1; i < rows.length; i++) {
+      const row = rows[i];
+      let found = false;
+      const cells = row.getElementsByTagName('td');
+
+      for (let j = 0; j < cells.length; j++) {
+        const cell = cells[j];
+        if (cell) {
+          const txtValue = cell.textContent || cell.innerText;
+          if (txtValue.toUpperCase().includes(filter)) {
+            found = true;
+            break;
+          }
+        }
+      }
+      row.style.display = found ? '' : 'none';
+    }
+  }
+</script>
+
+
+        <style>
+      /* Footer Styles */
+      .site-footer {
+        background: linear-gradient(135deg, #024e29, #03924d);
+        color: #fff;
+        padding: 30px 0 10px;
+        margin-top: 40px;
+        font-family: 'Tajawal', sans-serif;
+      }
+      
+      .footer-content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+      
+      .footer-section {
+        flex: 1;
+        min-width: 250px;
+        margin: 0 15px 20px;
+      }
+      
+      .footer-section h4 {
+        color: #fff;
+        margin-bottom: 20px;
+        position: relative;
+        padding-bottom: 10px;
+      }
+      
+      .footer-section h4::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 50px;
+        height: 2px;
+        background: #fdc116;
+      }
+      
+      .footer-section ul {
+        list-style: none;
+        padding: 0;
+      }
+      
+      .footer-section ul li {
+        margin-bottom: 10px;
+      }
+      
+      .footer-section ul li a {
+        color: #ecf0f1;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+      
+      .footer-section ul li a:hover {
+        color: #fdc116;
+        padding-right: 5px;
+      }
+      
+      .footer-section p {
+        color: #ecf0f1;
+        margin: 10px 0;
+        display: flex;
+        align-items: center;
+      }
+      
+      .footer-section p i {
+        margin-left: 10px;
+        color: #fdc116;
+      }
+      
+      .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+      }
+      
+      .social-icon {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.1);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        text-decoration: none;
+      }
+      
+      .social-icon:hover {
+        background: #fdc116;
+        transform: translateY(-3px);
+      }
+      
+      .footer-bottom {
+        text-align: center;
+        padding: 15px 0;
+        margin-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 14px;
+        color: #ecf0f1;
+      }
+      
+      @media (max-width: 768px) {
+        .footer-section {
+          flex: 100%;
+          text-align: center;
+          margin-bottom: 30px;
+        }
+        
+        .footer-section h4::after {
+          right: 50%;
+          transform: translateX(50%);
+        }
+        
+        .social-links {
+          justify-content: center;
+        }
+        
+        .footer-section p {
+          justify-content: center;
+        }
+      }
+    </style>
+  </body>
+</html>

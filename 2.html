@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>جمعية البركة للعمل الخيري والانساني - الأهداف</title>
-    <link rel="icon" type="image/png" href="images/logo.png" />
+    <title>النائب المكلف بالتنظيم</title>
+        <link rel="icon" type="image/png" href="images/logo.png" />
     <link rel="stylesheet" href="css/styles.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap"
@@ -17,14 +17,13 @@
     <style>
       .container {
         max-width: 100%;
-        padding: 0 20px;
+        padding: 20px;
       }
       
       .goals-container {
         background: white;
         border-radius: 10px;
         padding: 25px;
-        margin: 20px auto;
         box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
         width: 95%;
         max-width: 1400px;
@@ -76,7 +75,8 @@
       
       .goals-table-container {
         width: 100%;
-        overflow-x: auto;
+        max-height: 500px; /* Fixed height for the container */
+        overflow: auto; /* Enable both vertical and horizontal scrolling */
         margin-top: 20px;
         border-radius: 8px;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -85,7 +85,8 @@
       .goals-table {
         width: 100%;
         border-collapse: collapse;
-        min-width: 800px;
+        min-width: 100%; /* Make table at least as wide as its container */
+        table-layout: fixed; /* Helps with consistent column widths */
       }
       
       .goals-table th, 
@@ -180,7 +181,6 @@
         justify-content: flex-start;
         min-height: 100vh;
         width: 100%;
-        padding: 20px 0;
       }
       
       h2 {
@@ -200,8 +200,18 @@
         align-items: center;
         gap: 8px;
       }
-                  .continairete{max-width:900px;margin:0 auto}
-      header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+      .continairete{max-width:auto;margin:0 auto}
+      header{position: fixed;display:flex;background-color: white;width: 100%;align-items:center;justify-content:space-between;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  padding: 20px 20px 0px 30px; /* الأعلى والأسفل 10px — اليمين واليسار 20px */
+  box-sizing: border-box; /* مهم لمنع التمدد خارج الشاشة */
+}
+
+
       h1{font-size:20px;margin:0}
       p.lead{margin:0;color:var(--muted)}
       .carta{border-radius:12px;padding:18px}
@@ -211,6 +221,141 @@
       .btn{padding:8px 12px;border-radius:8px;border:0;cursor:pointer}
       .btn.primary{background:var(--accent);color:#fff}
       .btn.ghost{background:transparent;border:1px solid #e6eefc;color:var(--accent)}
+      
+      /* Back button styles */
+      .back-button {
+        background: linear-gradient(135deg, #026e3a, #059b53);
+        color: white;
+        border: none;
+        padding: 8px 20px;
+        border-radius: 25px;
+        font-family: 'Tajawal', sans-serif;
+        font-weight: 500;
+        font-size: 14px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      
+      .back-button:hover {
+        background: linear-gradient(135deg, #025f32, #03743d);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+      
+      
+      .back-button i {
+        transition: transform 0.3s ease;
+      }
+      
+      .back-button:hover i {
+        transform: translateX(-3px);
+      }
+
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+      
+@media (max-width: 1024px) {
+    .main-content {
+        margin-top: 35px !important;
+    }
+    .profile-pic {
+        margin-right: 20px; /* يقرب الصورة من النص */
+        margin-left: 20px; /* يقرب الصورة من النص */
+    }
+}
+
+@media (max-width: 766px) {
+    .main-content {
+        margin-top: -175px !important;
+    }
+}
+@media (max-width: 581px) {
+    .main-content {
+        margin-top: -90px !important;
+    }
+}
+  @media (max-width: 366px) {
+      .main-content {
+          margin-top: -125px !important;
+      }
+  }
+  @media (max-width: 222px) {
+    .main-content {
+        margin-top: -36px !important;
+    }
+}
+
+
+      /* تنسيقات الجدول للشاشات الصغيرة */
+      @media (max-width: 1024px) {
+        .goals-table {
+          display: block;
+          width: 100%;
+          max-width: 100%;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          white-space: nowrap;
+          position: relative;
+          border: 1px solid #e0e0e0;
+          border-radius: 8px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .goals-table table {
+          width: 100%;
+          margin: 0;
+          border-collapse: collapse;
+          min-width: 800px; /* عرض أدنى للجدول قبل ظهور شريط التمرير */
+        }
+        
+        .goals-table thead {
+          background-color: #f5f5f5;
+          position: sticky;
+          top: 0;
+          z-index: 10;
+        }
+        
+        .goals-table th,
+        .goals-table td {
+          padding: 12px 15px;
+          text-align: right;
+          border-bottom: 1px solid #e0e0e0;
+          white-space: nowrap;
+        }
+        
+        .goals-table tbody tr:hover {
+          background-color: #f9f9f9;
+        }
+        
+        .container {
+          padding: 10px;
+          width: 100%;
+          box-sizing: border-box;
+        }
+        
+        .goals-container {
+          width: 100%;
+          padding: 15px;
+          box-sizing: border-box;
+          overflow: hidden;
+        }
+        
+        .goals-form {
+          grid-template-columns: 1fr;
+          width: 100%;
+        }
+      }
+          .profile-pic {
+        margin-right: 20px; /* يقرب الصورة من النص */
+        margin-left: 20px; /* يقرب الصورة من النص */
+    }
     </style>
   </head>
   <body>
@@ -223,7 +368,7 @@
         window.location.href = "login.html";
       }
     </script>
-
+    <script src="js/users.js"></script>
     <div class="container">
       <header>
         <div class="logo-container">
@@ -238,27 +383,41 @@
             </div>
           </div>
         </div>
+        <button onclick="window.location.href='index.html'" class="back-button" style="margin-right: 20px;">
+          <i class="fas fa-arrow-right"></i> العودة للصفحة الرئيسية
+        </button>
       </header>
 
       <div class="main-content">
-          <div class="buttons-grid">
-            <button onclick="window.location.href='index.html'" class="back-button">
-              <i class="fas fa-arrow-right"></i> العودة للصفحة الرئيسية
-            </button>
-          </div>
-          <div class="goals-container">
-            <h2><i class="fas fa-bullseye"></i> إضافة هدف جديد</h2>
-            
-            <div class="goals-form">
-              <input type="text" id="date" placeholder="اليوم">
-              <input type="text" id="target" placeholder="المستهدفات">
-              <input type="text" id="requirements" placeholder="المستلزمات">
-              <input type="text" id="progress" placeholder="نسبة الإتمام">
-              <button onclick="addRow()" class="add-goal-btn">
-                <i class="fas fa-plus"></i> إضافة هدف
-              </button>
-            </div>
+
+      <div class="goals-container" style="display: flex;">
+
+        <!-- الصورة في اليمين -->
+        <div class="profile-pic" style="flex-shrink: 0;">
+          <img id="userAvatar" src="images/profiles/2.png" 
+              alt="صورة" 
+              style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;">
+        </div>
+
+
+
+        <!-- النص في اليسار -->
+        <div class="info" style="flex: 1;">
+          <h2 style="margin: 0;" id="name"></h2>
+          <h3 style="color: #666; margin-top: 5px;" id="position"></h3>
+        </div>
+        <script>
+            document.getElementById("name").textContent = users[1].name;
+            document.getElementById("position").textContent = users[1].position;
+        </script>
+
+
+      </div>
+
+
+          <div class="goals-container"> 
             <h3><i class="fas fa-check-double"></i> المهام</h3>
+          
                 <div class="continairete">
       <section class="carta">
         <ol class="agendate">
@@ -402,6 +561,15 @@
 
     </div>
             <h3><i class="fas fa-list-check"></i> الأهداف</h3>
+                        <div class="goals-form">
+              <input type="text" id="date" placeholder="اليوم">
+              <input type="text" id="target" placeholder="المستهدفات">
+              <input type="text" id="requirements" placeholder="المستلزمات">
+              <input type="text" id="progress" placeholder="نسبة الإتمام">
+              <button onclick="addRow()" class="add-goal-btn">
+                <i class="fas fa-plus"></i> إضافة هدف
+              </button>
+            </div>
             <table class="goals-table">
               <thead>
                 <tr>
@@ -425,16 +593,6 @@
         if (user && user.name) {
           document.getElementById('userName').textContent = user.name;
           
-          // Set user avatar if available
-          const userAvatar = document.getElementById('userAvatar');
-          if (userAvatar) {
-            if (user.avatar) {
-              userAvatar.src = user.avatar;
-            } else {
-              // Default avatar
-              userAvatar.src = 'images/profiles/default.png';
-            }
-          }
         }
 
         // Logout functionality
@@ -784,5 +942,157 @@
         loadGoals();
       });
     </script>
+        
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>معلومات التواصل</h4>
+          <p><i class="fas fa-map-marker-alt"></i> العنوان: حي العرصة بالقرب من مسجد عثمان بن عفان</p>
+          <p><i class="fas fa-phone"></i> الهاتف: 0660210500</p>
+          <p><i class="fas fa-envelope"></i> البريد الإلكتروني: elbarakamosta@gmail.com</p>
+        </div>
+        <div class="footer-section">
+          <h4>تابعنا على</h4>
+          <div class="social-links">
+            <a href="https://web.facebook.com/elbaraka.mostaganem" class="social-icon"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/elbaraka.mostaganem" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@elbarakahdz" class="social-icon"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom" >
+        <p style="text-align: center; direction: ltr;">© 2025 جميع الحقوق محفوظة - جمعية البركة للعمل الخيري والانساني</p>
+      </div>
+    </footer> 
+
+    <style>
+      /* Footer Styles */
+      .site-footer {
+        background: linear-gradient(135deg, #024e29, #03924d);
+        color: #fff;
+        padding: 30px 0 10px;
+        margin-top: 40px;
+        font-family: 'Tajawal', sans-serif;
+      }
+      
+      .footer-content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+      
+      .footer-section {
+        flex: 1;
+        min-width: 250px;
+        margin: 0 15px 20px;
+      }
+      
+      .footer-section h4 {
+        color: #fff;
+        margin-bottom: 20px;
+        position: relative;
+        padding-bottom: 10px;
+      }
+      
+      .footer-section h4::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 50px;
+        height: 2px;
+        background: #fdc116;
+      }
+      
+      .footer-section ul {
+        list-style: none;
+        padding: 0;
+      }
+      
+      .footer-section ul li {
+        margin-bottom: 10px;
+      }
+      
+      .footer-section ul li a {
+        color: #ecf0f1;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+      
+      .footer-section ul li a:hover {
+        color: #fdc116;
+        padding-right: 5px;
+      }
+      
+      .footer-section p {
+        color: #ecf0f1;
+        margin: 10px 0;
+        display: flex;
+        align-items: center;
+      }
+      
+      .footer-section p i {
+        margin-left: 10px;
+        color: #fdc116;
+      }
+      
+      .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+      }
+      
+      .social-icon {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.1);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        text-decoration: none;
+      }
+      
+      .social-icon:hover {
+        background: #fdc116;
+        transform: translateY(-3px);
+      }
+      
+      .footer-bottom {
+        text-align: center;
+        padding: 15px 0;
+        margin-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 14px;
+        color: #ecf0f1;
+      }
+      
+      @media (max-width: 768px) {
+        .footer-section {
+          flex: 100%;
+          text-align: center;
+          margin-bottom: 30px;
+        }
+        
+        .footer-section h4::after {
+          right: 50%;
+          transform: translateX(50%);
+        }
+        
+        .social-links {
+          justify-content: center;
+        }
+        
+        .footer-section p {
+          justify-content: center;
+        }
+      }
+    </style>
   </body>
 </html>
