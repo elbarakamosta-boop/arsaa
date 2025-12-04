@@ -1,0 +1,2439 @@
+:root {
+    --primary-color: #026e3a;
+    --secondary-color: #fdc116;
+    --accent-color: #cb2127;
+    --light-gray: #f5f5f5;
+    --dark-gray: #333;
+    --white: #fff;
+    --bg: #f4f6fb;
+    --card: #ffffff;
+    --accent: #026e3a;
+    --muted: #6b7280;
+    --shadow: 0 8px 20px rgba(16, 24, 40, 0.06);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Tajawal', sans-serif;
+    direction: rtl;
+    text-align: right;
+}
+
+/* Office Grid Styles */
+.offices-box {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 20px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    min-height: 300px;
+    /* Ensure minimum height */
+    position: relative;
+}
+
+.offices-box h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.offices-box h3 i {
+    color: var(--primary-color);
+}
+
+/* Offices Grid Layout */
+#offices-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* 4 columns */
+    grid-template-rows: repeat(8, auto);
+    /* 8 rows */
+    gap: 10px;
+    width: 100%;
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 10px;
+}
+
+/* Make the grid responsive */
+@media (max-width: 1024px) {
+    #offices-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    #offices-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    #offices-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Office card with dynamic background based on status */
+.office-card {
+    background: white;
+    border-radius: 6px;
+    padding: 10px 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s ease, transform 0.2s, box-shadow 0.2s;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    margin: 3px;
+}
+
+/* Add colored overlay based on status */
+.office-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.2;
+    /* Color overlay opacity */
+    z-index: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Active office - green background */
+.office-card.active-office::before {
+    background-color: #28a745;
+    /* Green for active */
+}
+
+/* Inactive office - red background */
+.office-card.inactive-office::before {
+    background-color: #dc3545;
+    /* Red for inactive */
+}
+
+/* Hover effect */
+.office-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.office-card:hover::before {
+    opacity: 0.3;
+    /* Slightly more visible on hover */
+}
+
+/* Make sure content stays above the colored background */
+.office-name,
+.office-status,
+.toggle-btn {
+    position: relative;
+    z-index: 1;
+}
+
+.office-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: -6px;
+    color: #333;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.office-status {
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-weight: 500;
+    margin: 4px 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.8rem;
+}
+
+/* Active Office Card - Green */
+.office-card.active-office {
+    background-color: #e8f5e9 !important;
+    color: #2e7d32 !important;
+    border: none !important;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.2) !important;
+}
+
+/* Inactive Office Card - Red */
+.office-card.inactive-office {
+    background-color: #ffebee !important;
+    color: #c62828 !important;
+    border: none !important;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(198, 40, 40, 0.2) !important;
+    opacity: 0.9;
+}
+
+/* Hover Effects */
+.office-card.active-office:hover {
+    background-color: #e0f2f1 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.office-card.inactive-office:hover {
+    background-color: #fce4ec !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.toggle-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 6px;
+    font-size: 0.9rem;
+}
+
+.toggle-btn:hover {
+    background: #025d30;
+    transform: rotate(90deg);
+}
+
+.office-head-controls {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0 20px;
+    padding: 12px 20px;
+    background-color: #e3f2fd;
+    border-radius: 8px;
+    border-right: 4px solid #1976d2;
+    color: #0d47a1;
+    font-weight: 500;
+}
+
+.office-head-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.office-head-status i {
+    font-size: 1.2rem;
+}
+
+/* RTL specific styles */
+[dir='rtl'] {
+    text-align: right;
+}
+
+[dir='rtl'] .buttons-grid,
+[dir='rtl'] .profile-box,
+[dir='rtl'] .activity-box,
+[dir='rtl'] .calendar-box,
+[dir='rtl'] .events-box,
+[dir='rtl'] .documents-box,
+[dir='rtl'] .chat-box,
+[dir='rtl'] .offices-box {
+    text-align: right;
+}
+
+/* Adjust padding and margins for RTL */
+[dir='rtl'] .left-section {
+    padding-left: 0;
+    padding-right: 10px;
+}
+
+[dir='rtl'] .right-section {
+    padding-right: 0;
+    padding-left: 10px;
+}
+
+html {
+    margin-left: calc(100vw - 100%);
+    margin-right: 0;
+}
+
+body {
+    background-color: #f9f9f9;
+    color: var(--dark-gray);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px 0;
+    border-bottom: 2px solid var(--primary-color);
+
+    /* الخلفية الشفافة */
+    background: rgba(255, 255, 255, 0.445);
+
+    /* تأثير الفلو */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    /* تحسين المظهر */
+    border-radius: 10px;
+}
+
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    margin-top: -10px;
+
+    flex-wrap: wrap;
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+
+    object-fit: contain;
+}
+
+h1 {
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    margin-top: -50px;
+    margin: 0;
+}
+
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 30px;
+    margin-top: 130px;
+    align-items: start;
+}
+
+/* Left Section */
+.left-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+}
+
+.buttons-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.buttons-grid button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.buttons-grid button:hover {
+    background-color: #015a2f;
+    color: #ffffff;
+}
+
+.members-btn {
+    background-color: var(--secondary-color);
+    color: #333;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    transition: background-color 0.3s;
+}
+
+.members-btn:hover {
+    background-color: #e6b000;
+}
+
+.activite-btn {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    transition: background-color 0.3s;
+}
+
+.activite-btn:hover {
+    background-color: #014e29;
+}
+
+.eventss-btn {
+    background-color: var(--accent-color);
+    color: #ffffff;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    transition: background-color 0.3s;
+}
+
+.eventss-btn:hover {
+    background-color: #8d1317;
+}
+
+
+.activity-box,
+.calendar-box,
+.events-box,
+.documents-box,
+.chat-box,
+.offices-box {
+    background-color: var(--white);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--light-gray);
+}
+
+/* Right Section */
+.right-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+}
+
+.profile-pic img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--secondary-color);
+}
+
+.profile-info h3 {
+    margin: 0;
+    color: var(--primary-color);
+}
+
+.rank {
+    color: var(--accent-color);
+    font-weight: 500;
+}
+
+/* Events */
+.events-content {
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+}
+
+/* Documents */
+.upload-area {
+    text-align: center;
+    padding: 20px;
+    border: 2px dashed #ddd;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.upload-btn {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.upload-btn:hover {
+    background-color: #015a2f;
+}
+
+/* Chat */
+.chat-messages {
+    height: 250px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    overflow-y: auto;
+}
+
+.chat-input {
+    display: flex;
+    gap: 10px;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.chat-input button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Offices Grid */
+.offices-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.office-btn {
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: transform 0.2s;
+}
+
+.office-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* Calendar */
+#calendar {
+    font-family: 'Tajawal', sans-serif;
+    width: 100%;
+    background: transparent;
+    border-radius: 12px;
+    direction: rtl;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.today-display {
+    background: var(--primary-color);
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.current-date .gregorian-date {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.current-date .hijri-date {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 0 10px;
+}
+
+.month-display {
+    text-align: center;
+    flex-grow: 1;
+}
+
+.hijri-month {
+    display: block;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.gregorian-month {
+    display: block;
+    font-size: 1rem;
+    color: #666;
+    margin-top: 5px;
+}
+
+.calendar-header button {
+    background: rgba(2, 110, 58, 0.1);
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: var(--primary-color);
+    padding: 8px 15px;
+    border-radius: 8px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+}
+
+.calendar-header button:hover {
+    background: rgba(2, 110, 58, 0.2);
+    transform: translateY(-1px);
+}
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+    font-size: 0.9rem;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    border-top: 1px solid #eee;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    width: 100%;
+    direction: rtl;
+}
+
+.calendar-day {
+    position: relative;
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s;
+    padding: 5px;
+    min-height: 50px;
+}
+
+.calendar-day .day-number {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+
+.calendar-day .hijri-day {
+    font-size: 0.7rem;
+    color: #666;
+    font-weight: normal;
+}
+
+.calendar-day:hover:not(.other-month) {
+    background-color: #f0f7ff;
+}
+
+.calendar-day.today {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 600;
+}
+
+.calendar-day.today .hijri-day {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.calendar-day.other-month {
+    color: #aaa;
+    opacity: 0.6;
+    cursor: default;
+}
+
+.calendar-day.other-month:hover {
+    background: none;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .main-content {
+        grid-template-columns: 1fr;
+    }
+
+    .offices-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Header Styles */
+.header-text {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+}
+
+.user-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    background: #f8f9fa;
+    padding: 8px 15px;
+    border-radius: 8px;
+}
+
+
+.logout-btn {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 5px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s;
+}
+
+.logout-btn:hover {
+    background: #f5c6cb;
+}
+
+/* Buttons Grid */
+.buttons-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.buttons-grid button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    gap: 10px;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    color: #495057;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: right;
+    width: 100%;
+    font-size: 1rem;
+}
+
+.buttons-grid button i {
+    font-size: 1.2rem;
+    margin-right: 8px;
+    margin-left: 0;
+}
+
+.buttons-grid button.active-role {
+    background-color: #026e3a;
+    color: white;
+    box-shadow: 0 4px 8px rgba(2, 110, 58, 0.2);
+}
+
+.buttons-grid button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: #e9ecef;
+}
+
+/* Icons in Headings */
+h3 i {
+    margin-left: 8px;
+    color: #026e3a;
+}
+
+/* Profile Box */
+.profile-box {
+    margin-left: 70px;
+    margin-top: -20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.profile-pic img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #fdc116;
+}
+
+.profile-info h3 {
+    margin: 0;
+    color: #026e3a;
+    font-size: 1.2rem;
+}
+
+.profile-info .rank {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Chat */
+.chat-messages {
+    height: 300px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    overflow-y: auto;
+}
+
+.chat-input {
+    display: flex;
+    gap: 10px;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.chat-input button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Offices Grid */
+.offices-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.office-btn {
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 300;
+    transition: transform 0.2s;
+}
+
+.office-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .main-content {
+        grid-template-columns: 1fr;
+        margin-top: 20px;
+    }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        /* تباعد بين اليسار واليمين */
+        align-items: center;
+        padding: 10px 15px;
+        flex-wrap: wrap;
+        /* يسمح بالانكسار على الشاشات الصغيرة */
+    }
+
+    /* ---------- Left Section ---------- */
+    .lefts-section {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        /* مسافة مناسبة بين الصورة والنص */
+    }
+
+    .profile-pic img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #f5c000;
+    }
+
+    .profile-info {
+        display: flex;
+        flex-direction: column;
+        /* يمكن تغييره إلى row إذا تريد النص بجانب الصورة بدلاً من فوق بعض */
+        justify-content: center;
+    }
+
+    .profile-info h3 {
+        font-size: 16px;
+        font-weight: bold;
+        color: #00773c;
+        margin: 0;
+    }
+
+    .profile-info .rank {
+        font-size: 14px;
+        color: #555;
+        margin: 0;
+    }
+
+    .profile-info {
+        flex-direction: row;
+        /* من عمودي إلى أفقي */
+        align-items: center;
+        gap: 10px;
+    }
+
+    .profile-info h3,
+    .profile-info .rank {
+        margin: 0 5px 0 0;
+        /* تصغير الهوامش */
+    }
+
+    /* ---------- Right Section ---------- */
+    .rights-section {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        width: 55%;
+
+    }
+
+    .header-text h1 {
+        font-size: 18px;
+        font-weight: bold;
+        color: #00773c;
+    }
+
+    .user-controls {
+        margin-top: 5px;
+    }
+
+    .user-controls span {
+        font-size: 14px;
+        color: #333;
+    }
+
+    .logout-btn {
+        margin-top: 5px;
+        background-color: #f8d7da;
+        color: #721c24;
+        border: none;
+        padding: 5px 10px;
+        font-size: 13px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .logout-btn i {
+        margin-left: 5px;
+    }
+
+    .h1.header-text {
+        font-size: 16px;
+    }
+
+    .header-text {
+        font-size: 12px;
+    }
+
+    .offices-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .left-section {
+        align-items: auto;
+        width: 95%;
+        margin-right: 10px;
+    }
+
+    .right-section {
+        margin-top: -30px;
+        align-items: auto;
+        width: 95%;
+        margin-right: 20px;
+    }
+
+
+    .activity-card {
+        background: transparent;
+    }
+
+    .activity-card h2 {
+        margin: 0;
+        color: #388e3c;
+        font-size: 24px;
+    }
+
+    .activity-card p {
+        color: #555;
+        margin: 10px 0;
+        line-height: 1.6;
+    }
+
+    .no-activity {
+        font-size: 18px;
+        color: #777;
+        margin-top: 30px;
+    }
+
+    .events-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+}
+
+.event-card {
+    background: transparent;
+    text-align: right;
+    flex: 1 1 calc(33.333% - 20px);
+    min-width: 150px;
+    max-width: 220px;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+}
+
+.event-card h2 {
+    color: #388e3c;
+    font-size: 20px;
+    margin: 0;
+}
+
+.event-card p {
+    color: #555;
+    margin: 8px 0;
+    line-height: 1.6;
+    font-size: 13px;
+}
+
+.date {
+    color: #e53935;
+    font-weight: 600;
+}
+
+.place {
+    color: #388e3c;
+    font-weight: 600;
+}
+
+.no-events {
+    font-size: 18px;
+    color: #777;
+    margin-top: 30px;
+}
+
+@media (max-width: 768px) {
+    .event-card {
+        flex: 1 1 100%;
+    }
+}
+
+
+
+
+
+/* زر فتح النافذة */
+.open-btn {
+    background: var(--accent);
+    font-family: 'Tajawal', sans-serif;
+    color: #fff;
+    padding: 12px 22px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.open-btn:hover {
+    background: #019d52
+}
+
+/* خلفية النافذة */
+.modal {
+    display: none;
+    font-family: 'Tajawal', sans-serif;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+/* صندوق النافذة */
+.modal-content {
+    background: #fff;
+    font-family: 'Tajawal', sans-serif;
+    width: 100%;
+    max-width: 1100px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 14px;
+    padding: 20px;
+    position: relative;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+}
+
+/* زر الغلق */
+.close-btn {
+    position: absolute;
+    top: 14px;
+    font-family: 'Tajawal', sans-serif;
+    left: 14px;
+    background: #eee;
+    border: none;
+    padding: 6px 12px;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    background: #ddd
+}
+
+.add-btn {
+    position: absolute;
+    top: 14px;
+    font-family: 'Tajawal', sans-serif;
+    left: 64px;
+    background: #eee;
+    border: none;
+    padding: 6px 12px;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.add-btn:hover {
+    background: #ddd
+}
+
+
+header2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Tajawal', sans-serif;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 22px;
+    text-align: center;
+}
+
+h12 {
+    margin: 0;
+    font-size: 24px;
+    font-family: 'Tajawal', sans-serif;
+    color: var(--accent);
+}
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    font-family: 'Tajawal', sans-serif;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+input[type=search],
+select {
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    background: #fff;
+    min-width: 220px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 15px;
+    outline: none;
+    transition: border-color .2s;
+}
+
+input[type=search]:focus,
+select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(11, 116, 222, 0.15);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+}
+
+.card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 14px;
+    box-shadow: var(--shadow);
+    display: flex;
+    font-family: 'Tajawal', sans-serif;
+    gap: 12px;
+    align-items: flex-start;
+    transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(16, 24, 40, 0.08);
+}
+
+.avatar {
+    width: 92px;
+    font-family: 'Tajawal', sans-serif;
+    height: 92px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #eef3fb;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.info {
+    flex: 1;
+    min-width: 0
+}
+
+.title {
+    font-weight: 700;
+    font-size: 16px;
+    font-family: 'Tajawal', sans-serif;
+    margin-bottom: 8px;
+    color: #0f172a
+}
+
+.meta-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px
+}
+
+.field {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    flex-wrap: wrap
+}
+
+.label {
+    min-width: 120px;
+    color: var(--muted);
+    font-size: 13px
+}
+
+.value {
+    font-weight: 600;
+    font-size: 14px;
+    color: #111
+}
+
+.empty {
+    padding: 40px;
+    text-align: center;
+    color: var(--muted)
+}
+
+footer {
+    margin-top: 18px;
+    font-family: 'Tajawal', sans-serif;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px
+}
+
+/* زر ملفاتي */
+.open-modal-btnn3 {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.open-modal-btnn3:hover {
+    background-color: #019d52;
+}
+
+/* النافذة المنبثقة (الخلفية الشفافة) */
+.modal {
+    display: none;
+    /* مخفية افتراضياً */
+    position: fixed;
+    z-index: 1000;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding-top: 50px;
+}
+
+/* المحتوى داخل النافذة */
+.modal-content {
+    position: relative;
+    margin: auto;
+    background: #fff;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 1100px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* زر الإغلاق */
+.close-btnn3 {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close-btnn3:hover {
+    color: #e74c3c;
+}
+
+/* محتوى الصفحة الأصلي داخل النافذة */
+.containern3 {
+    padding: 20px;
+}
+
+.page-header h1 {
+    color: #2c3e50;
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+    border-bottom: 2px solid #eaeaea;
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+}
+
+/* تصميم بطاقات الملفات */
+.file-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.file-card {
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: 0.3s;
+}
+
+.file-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.file-preview {
+    background: #f8f9fa;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.file-info {
+    padding: 15px;
+}
+
+.file-name {
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.file-meta {
+    color: #7f8c8d;
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.btnn3 {
+    padding: 8px 14px;
+    border-radius: 6px;
+    background: #019d52;
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;
+    transition: 0.3s;
+    border: none;
+}
+
+.btnn3:hover {
+    background: #019d52;
+}
+
+.loading3 {
+    text-align: center;
+    padding: 30px;
+    color: #7f8c8d;
+}
+
+
+
+.error-message {
+    background: #fdecea;
+    color: #c0392b;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 20px;
+}
+
+
+.messages2 {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.msg {
+    margin: 5px 0;
+    background-color: transparent;
+}
+
+.msg strong {
+    color: #019d52;
+}
+
+input,
+button {
+    padding: 5px;
+    font-size: 14px;
+}
+
+button {
+    background: #019d52;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.user-info {
+    background: #e9f7fe;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+header {
+    position: fixed;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 10000;
+    padding: 20px 20px 0px 30px;
+    /* الأعلى والأسفل 10px — اليمين واليسار 20px */
+    box-sizing: border-box;
+    /* مهم لمنع التمدد خارج الشاشة */
+}
+
+/* القسم الأيسر */
+.lefts-section {
+    display: flex;
+    align-items: center;
+    width: 65%;
+}
+
+/* القسم الأيمن */
+.rights-section {
+    display: none;
+    /* Hide on mobile by default */
+}
+
+/* إظهار صندوق الملف الشخصي بدءًا من 543px */
+@media (min-width: 543px) {
+    .rights-section {
+        display: block;
+    }
+}
+
+
+.modal {
+    z-index: 101000;
+}
+
+/* Mobile Menu Button */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--primary-color);
+}
+
+
+/* Mobile Styles */
+@media (max-width: 767px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .logo-container {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .logo-container img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .header-text h1 {
+        font-size: 16px;
+        margin-right: 10px;
+    }
+
+    .user-controls {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        padding: 10px;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .profile-box {
+        margin: 10px 0;
+        width: 100%;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .buttons-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .events-box,
+    .calendar-box {
+        margin: 10px 0;
+    }
+}
+
+
+
+/* ------------------ MOBILE STYLES ------------------ */
+@media (max-width: 767px) {
+
+    /* ---------------- HEADER ---------------- */
+    header {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 15px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        max-width: 767px;
+        z-index: 10000;
+        background-color: #fff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        gap: 10px;
+    }
+
+    /* ---------------- LOGO & HEADER TEXT ---------------- */
+    .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .logo-container img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .header-text h1 {
+        font-size: 16px;
+        margin: 0;
+        text-align: center;
+        color: var(--primary-color);
+    }
+
+    /* ---------------- USER CONTROLS ---------------- */
+    .user-controls {
+        position: relative;
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        padding: 8px 0;
+        background: #f8f9fa;
+        border-radius: 8px;
+        margin-top: 5px;
+    }
+
+    .user-controls span {
+        font-size: 14px;
+        color: #333;
+    }
+
+    .logout-btn {
+        padding: 5px 10px;
+        font-size: 12px;
+        border-radius: 5px;
+    }
+
+    /* ---------------- PROFILE BOX ---------------- */
+    .profile-box {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin: 10px 0;
+        padding: 10px;
+        width: 100%;
+        border-radius: 10px;
+    }
+
+    .profile-pic img {
+        width: 60px;
+        height: 60px;
+        border: 2px solid var(--secondary-color);
+    }
+
+    .profile-info {
+        flex-direction: column;
+        gap: 4px;
+        margin-top: 5px;
+    }
+
+    .profile-info h3 {
+        font-size: 14px;
+        color: var(--primary-color);
+        margin: 0;
+    }
+
+    .profile-info .rank {
+        font-size: 12px;
+        color: var(--accent-color);
+        margin: 0;
+    }
+
+    /* ---------------- BUTTONS GRID ---------------- */
+    .buttons-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin: 10px 0;
+    }
+
+    .buttons-grid button {
+        justify-content: center;
+        font-size: 14px;
+        padding: 10px 12px;
+    }
+
+    /* ---------------- OFFICES GRID ---------------- */
+    .offices-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .office-card {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    /* ---------------- EVENTS & CALENDAR ---------------- */
+    .events-box,
+    .calendar-box {
+        margin: 10px 0;
+    }
+
+    /* ---------------- MAIN CONTENT ---------------- */
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        padding-top: 180px;
+        /* Space for fixed header + profile */
+        padding-bottom: 60px;
+        /* Space for bottom controls if any */
+    }
+
+    /* ---------------- MODAL & POPUPS ---------------- */
+    .modal {
+        padding-top: 30px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        width: 95%;
+        max-width: 500px;
+    }
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+    header {
+        padding: 15px 30px;
+        height: auto;
+    }
+
+    .lefts-section {
+        width: 65%;
+    }
+
+    .rights-section {
+        display: flex;
+        justify-content: flex-end;
+        width: 35%;
+    }
+
+    .modal {
+        padding-top: 30px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* --------- Profile Box --------- */
+    .profile-box {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        padding: 5px;
+        gap: 5px;
+    }
+
+    .profile-pic img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .profile-info h3 {
+        font-size: 14px;
+        margin: 2px 0;
+    }
+
+    .profile-info .rank {
+        font-size: 12px;
+        color: #666;
+    }
+}
+
+
+
+/* Footer Styles */
+.site-footer {
+    background: linear-gradient(135deg, #024e29, #03924d);
+    color: #fff;
+    padding: 30px 0 10px;
+    margin-top: 40px;
+    font-family: "Tajawal", sans-serif;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    max-width: auto;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 250px;
+    margin: 0 15px 20px;
+}
+
+.footer-section h4 {
+    color: #fff;
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.footer-section h4::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 50px;
+    height: 2px;
+    background: #fdc116;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+    color: #ecf0f1;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #fdc116;
+    padding-right: 5px;
+}
+
+.footer-section p {
+    color: #ecf0f1;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+}
+
+.footer-section p i {
+    margin-left: 10px;
+    color: #fdc116;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.social-icon {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.social-icon:hover {
+    background: #fdc116;
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 14px;
+    color: #ecf0f1;
+}
+
+@media (max-width: 768px) {
+    .footer-section {
+        flex: 100%;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .footer-section h4::after {
+        right: 50%;
+        transform: translateX(50%);
+    }
+
+    .social-links {
+        justify-content: center;
+    }
+
+    .footer-section p {
+        justify-content: center;
+    }
+}
+
+/* ---------- Responsive: Mobile ---------- */
+@media (max-width: 768px) {
+
+    .footer-content {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-section {
+        flex: 100%;
+        max-width: 100%;
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .footer-section h4::after {
+        right: 50%;
+        transform: translateX(50%);
+    }
+
+    .footer-section p {
+        justify-content: center;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
+}
+
+
+/* ---------- Responsive Header for very small screens (≤581px) ---------- */
+@media (max-width: 581px) {
+
+    /* منع التمرير الأفقي للصفحة */
+    html,
+    body {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    /* التأكد من أن الهيدر لا يتجاوز عرض الشاشة */
+    header {
+        width: 100%;
+        max-width: 100vw;
+        left: 0;
+        right: 0;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    /* التأكد من أن المحتوى الرئيسي لا يتجاوز عرض الشاشة */
+    .main-content {
+        width: 100%;
+        max-width: 100vw;
+        box-sizing: border-box;
+        margin: 0;
+    }
+
+    /* --------- Container --------- */
+    .container {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-sizing: border-box;
+        gap: 10px;
+    }
+
+    /* --------- Header --------- */
+    .header {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        padding: 10px 15px;
+        background-color: #fff;
+        /* لو تريد خلفية */
+        z-index: 1000;
+    }
+
+    .header-text h1 {
+        font-size: 18px;
+        text-align: center;
+        margin: 5px 0;
+    }
+
+    .user-controls {
+        font-size: 14px;
+        margin: 5px 0;
+        text-align: center;
+    }
+
+    /* --------- Left & Right Sections --------- */
+    .lefts-section,
+    .rights-section {
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin: 10px 0;
+    }
+
+    /* --------- Profile Box --------- */
+    .profile-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 5px;
+        gap: 5px;
+    }
+
+    .profile-pic img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .profile-info h3 {
+        font-size: 14px;
+        margin: 2px 0;
+    }
+
+    .profile-info .rank {
+        font-size: 12px;
+        color: #666;
+    }
+
+    /* --------- Footer --------- */
+    .site-footer {
+        padding: 15px 10px;
+        margin-top: 20px;
+        width: 100%;
+    }
+
+    .footer-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        padding: 0 10px;
+    }
+
+    .footer-section {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .footer-section h4 {
+        font-size: 16px;
+        margin-bottom: 10px;
+        position: relative;
+    }
+
+    .footer-section ul li {
+        margin-bottom: 8px;
+    }
+
+    .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .social-icon {
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+    }
+
+    .footer-bottom {
+        font-size: 12px;
+        padding: 10px 0;
+        text-align: center;
+    }
+
+    /* --------- Modal --------- */
+    .modal {
+        padding: 15px 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 95%;
+        margin: 0 auto;
+        box-sizing: border-box;
+    }
+}
+
+/* إصلاح شامل للعناصر في الشاشات الصغيرة */
+@media (max-width: 767px) {
+
+    /* إعادة تعيين الهوامش والحشو للعناصر الرئيسية */
+    .container,
+    .main-content,
+    .left-section,
+    .right-section,
+    .buttons-grid,
+    .events-box {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 5px !important;
+        box-sizing: border-box !important;
+        overflow-x: hidden !important;
+    }
+
+    /* إصلاح تخطيط الشبكة */
+    .main-content {
+        display: flex !important;
+        flex-direction: column;
+        padding-top: 420px !important;
+    }
+
+    /* إصلاح الأزرار */
+    .buttons-grid {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 8px;
+        padding: 0 5px !important;
+    }
+
+    .buttons-grid button {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 10px 5px !important;
+        font-size: 14px;
+        white-space: normal;
+        word-wrap: break-word;
+    }
+
+    /* إصلاح مربع الأحداث */
+    .events-box {
+        margin: 10px 0 !important;
+        padding: 10px 5px !important;
+    }
+
+    /* التأكد من أن الصور لا تتجاوز عرض الشاشة */
+    img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    /* منع التمرير الأفقي */
+    html,
+    body {
+        overflow-x: hidden;
+        width: 100%;
+        position: relative;
+    }
+
+    /* إصلاح الهيدر */
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 5px !important;
+        margin: 0 !important;
+    }
+}
+
+@media (max-width: 1024px) {
+    .main-content {
+        padding-top: 80px !important;
+    }
+}
+
+@media (max-width: 1024px) {
+    .main-content {
+        padding-top: 80px !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .main-content {
+        padding-top: 80px !important;
+    }
+}
+
+@media (max-width: 766px) {
+    .main-content {
+        padding-top: 330px !important;
+    }
+}
+
+@media (max-width: 580px) {
+    .main-content {
+        padding-top: 270px !important;
+        display: flex;
+        justify-content: center;
+    }
+    .profile-box {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .profile-pic {
+        width: 80px;
+        height: 80px;
+        margin-right: 75px; /* يقرب الصورة من النص */
+        margin-left:-65px; /* يقرب الصورة من النص */
+    }
+    .profile-info {
+        text-align: right;
+        flex: 1;
+    }
+    .profile-info h1 {
+        font-size: 1.2rem;
+        margin: 0 0 5px 0;
+    }
+    .profile-info p {
+        font-size: 0.9rem;
+        margin: 0;
+    }
+}
+@media (max-width: 396px) {
+    .main-content {
+        padding-top: 360px !important;
+    }
+}
+@media (max-width: 373px) {
+    .main-content {
+        padding-top: 380px !important;
+    }
+        .profile-pic {
+        width: 80px;
+        height: 80px;
+        margin-right: 0; /* يقرب الصورة من النص */
+        margin-left: 0; /* يقرب الصورة من النص */
+    }
+}
+
+@media (max-width: 251px) {
+    .main-content {
+        padding-top: 400px !important;
+    }
+}
+@media (max-width: 232px) {
+    .main-content {
+        padding-top: 420px !important;
+    }
+}
+@media (max-width: 217px) {
+    .main-content {
+        padding-top: 450px !important;
+    }
+}
+@media (max-width: 150px) {
+    .main-content {
+        padding-top: 480px !important;
+    }
+}
+
+.profile-box {
+    background: transparent;
+}
+header {
+    background: rgba(255, 255, 255, 0.852);
+}
+
+/* تحسينات للهواتف المحمولة */
+@media (max-width: 767px) {
+    /* إصلاح ظهور القوائم المنسدلة */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        justify-content: center;
+        align-items: flex-start;
+        overflow-y: auto;
+    }
+
+    .modal.active {
+        display: flex;
+    }
+
+    .modal-content {
+        background: white;
+        border-radius: 10px;
+        width: 95%;
+        max-width: 500px;
+        max-height: 80vh;
+        overflow-y: auto;
+        position: relative;
+    }
+
+    /* تحسين ظهور زر الإغلاق */
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #666;
+        z-index: 1001;
+    }
+
+    /* منع التمرير خلف النافذة المنبثقة */
+    body.modal-open {
+        overflow: hidden;
+        height: 100%;
+    }
+
+    /* تحسين ظهور الأزرار في القوائم */
+    .buttons-grid button {
+        padding: 12px 8px;
+        font-size: 0.9rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+    }
+
+    /* تحسين ظهور الهيدر */
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    /* إخفاء العناصر غير الضرورية في الهاتف */
+    .activity-box,
+    .calendar-box {
+        display: none;
+    }
+}
+
+/* تحسينات إضافية للشاشات الصغيرة جداً */
+@media (max-width: 400px) {
+    .profile-box {
+        flex-direction: column;
+        text-align: center;
+    }
+}
